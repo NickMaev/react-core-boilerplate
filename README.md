@@ -25,6 +25,7 @@ Third-party libraries:
 * [WebPack 4](https://webpack.js.org/) - bundler.
 * [Axios](https://github.com/axios/axios) - isomorphic fetch util.
 * [ts-nameof](https://github.com/dsherret/ts-nameof) - allows you to use type-safe names of inputs in form.
+
 Own libraries / fixed forks:
 * [domain-wait](https://github.com/NickMaev/domain-wait) - domain-task replacement with async/await support.
 * [NVal](https://github.com/NickMaev/NVal) - jQuery-validation-like Vanilla JS validator.
@@ -32,6 +33,7 @@ Own libraries / fixed forks:
 * [NSerializeJson](https://github.com/NickMaev/NSerializeJson) - flexible form to JSON serializer based on Vanilla JS.
 * [bootstrap3-native](https://github.com/NickMaev/bootstrap3-native) - fixed [bootstrap.native](https://github.com/thednp/bootstrap.native) with types.
 
+Structure:
 ```shell
 |   .gitignore
 |   AppSettings.cs
