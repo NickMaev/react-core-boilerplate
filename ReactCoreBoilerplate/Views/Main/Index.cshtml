@@ -1,0 +1,48 @@
+﻿@inject Microsoft.AspNetCore.SpaServices.Prerendering.ISpaPrerenderer prerenderer
+@using Newtonsoft.Json
+@model ReactCoreBoilerplate.Models.SessionData
+@{
+    Layout = null;
+
+    var prerenderResult = await prerenderer.RenderToString("ClientApp/dist/main-server", customDataParameter: Model);
+    var sessionDataJson = prerenderResult?.Globals?["sessionData"]?.ToString();
+    var initialReduxStateJson = prerenderResult?.Globals?["initialReduxState"]?.ToString();
+    var helmetStringsPrerender = prerenderResult?.Globals?["helmetStrings"]?.ToString();
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    @Html.Raw(helmetStringsPrerender)
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="~/" />
+
+    <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+
+    @if (!AppSettings.Default.IsDevelopment)
+    {
+        <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
+    }
+    
+    <script>
+        window.sessionData = @Html.Raw(string.IsNullOrEmpty(sessionDataJson) ? "null" : sessionDataJson);    
+        window.initialReduxState = @Html.Raw(initialReduxStateJson);
+    </script>
+</head>
+<body>
+
+<div id="preloader">
+    <div>Loading...</div>
+</div>
+
+@* Save the request token in a div. CORS needs to make sure this token can't be read by javascript from other sources than ours *@
+<div id="xsrf-token" data-xsrf-token="@ViewBag.AntiForgeryRequestToken"></div>
+<div id="access-token" data-access-token="@ViewBag.accessToken"></div>
+
+<div id="react-app">@Html.Raw(prerenderResult?.Html)</div>
+
+<script src="~/dist/vendor.js" asp-append-version="true"></script>
+<script src="~/dist/main-client.js" asp-append-version="true"></script>
+
+</body>
+</html>
