@@ -1,5 +1,7 @@
 Project template available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
 
+![](https://habrastorage.org/webt/uk/yi/uy/ukyiuyzyeahoi3rebyllgcqv8ao.png)
+
 # Description
 React Core Boilerplate is a starting point for building universal/isomorphic React applications with ASP.NET Core 2.
 It bases on the TypeScript and other libraries for creating powerfull web applications.
