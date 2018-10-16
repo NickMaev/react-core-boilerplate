@@ -1,7 +1,17 @@
+![](https://habrastorage.org/webt/uk/yi/uy/ukyiuyzyeahoi3rebyllgcqv8ao.png)
+
+Project template available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
+
+# Changes
+Version | Date | Description
+---|---|---
+1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router.
+
 # Description
 React Core Boilerplate is a starting point for building universal/isomorphic React applications with ASP.NET Core 2.
 It bases on the TypeScript and other libraries for creating powerfull web applications.
 All work fine out of the box. Also helpful for newbies.
+In project exists fake authorization system, you can change it to Identity or another.
 
 # Usage
 
