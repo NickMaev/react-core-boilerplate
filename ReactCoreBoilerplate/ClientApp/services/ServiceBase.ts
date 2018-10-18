@@ -2,6 +2,7 @@
 import Result from "@Models/Result";
 import Axios from "axios";
 import { transformUrl } from "domain-wait";
+import jsonToUrl from "json-to-url";
 
 export interface IRequestOptions {
     url: string;
@@ -18,10 +19,20 @@ export abstract class ServiceBase {
 
         opts.url = transformUrl(opts.url); // Allow requests also for Node.
 
+        var processQueryUrl = (url: string, data: any) : string => {
+            if (data) {
+                if (url.endsWith("/")) {
+                    url = url.substring(0, url.length - 1);
+                }
+                return `${url}?${jsonToUrl(data)}`;
+            }
+            return `${opts.url}`;
+        };
+
         try {
             switch (opts.method) {
             case "GET":
-                axiosResult = await Axios.get(opts.url);
+                axiosResult = await Axios.get(processQueryUrl(opts.url, opts.data));
                 break;
             case "POST":
                 axiosResult = await Axios.post(opts.url, opts.data);
@@ -33,7 +44,7 @@ export abstract class ServiceBase {
                 axiosResult = await Axios.patch(opts.url, opts.data);
                 break;
             case "DELETE":
-                axiosResult = await Axios.delete(opts.url);
+                axiosResult = await Axios.delete(processQueryUrl(opts.url, opts.data));
                 break;
             }
             result = new Result(axiosResult.data.value, ...axiosResult.data.errors);

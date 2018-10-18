@@ -1,4 +1,4 @@
-In project exists fake authorization system, you can change it to Identity or another.
+The project contains a fake authorization system, so you can change it to Identity or another.
 More info: https://github.com/NickMaev/react-core-boilerplate
 
 # Installation

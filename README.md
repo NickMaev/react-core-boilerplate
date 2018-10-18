@@ -5,13 +5,14 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 # Changes
 Version | Date | Description
 ---|---|---
+1.2 | 2018-10-18 | Updated dependency of "ASP.NET Core" package due to vulnerability. Added feature which allows you to pass JSON objects to URL query for GET and DELETE methods.
 1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router.
 
 # Description
 React Core Boilerplate is a starting point for building universal/isomorphic React applications with ASP.NET Core 2.
 It bases on the TypeScript and other libraries for creating powerfull web applications.
-All work fine out of the box. Also helpful for newbies.
-In project exists fake authorization system, you can change it to Identity or another.
+All work fine out of the box. Also is helpful for newbies.
+The project contains a fake authorization system, so you can change it to Identity or another.
 
 # Usage
 
@@ -35,6 +36,7 @@ Third-party libraries:
 * [WebPack 4](https://webpack.js.org/) - bundler.
 * [Axios](https://github.com/axios/axios) - isomorphic fetch util.
 * [ts-nameof](https://github.com/dsherret/ts-nameof) - allows you to use type-safe names of inputs in form.
+* [json-to-url](https://www.npmjs.com/package/json-to-url) - allows you to pass JSON objects to URL query for GET and DELETE methods.
 
 Own libraries / fixed forks:
 * [domain-wait](https://github.com/NickMaev/domain-wait) - domain-task replacement with async/await support.

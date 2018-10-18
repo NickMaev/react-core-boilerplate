@@ -20,6 +20,7 @@ module.exports = (env) => {
             },
             entry: {
                 vendor: [
+                'json-to-url',
                 'domain-wait',
                 'react-paginating',
                 'axios',
