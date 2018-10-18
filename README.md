@@ -6,7 +6,7 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 Version | Date | Description
 ---|---|---
 1.2 | 2018-10-18 | Updated dependency of "ASP.NET Core" package due to vulnerability. Added feature which allows you to pass JSON objects to URL query for GET and DELETE methods.
-1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router.
+1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router. If you want to fix it manually, see the commit [here](https://github.com/NickMaev/react-core-boilerplate/commit/34bef1c42879e73985633275c8fb499415c60d8a).
 
 # Description
 React Core Boilerplate is a starting point for building universal/isomorphic React applications with ASP.NET Core 2.
