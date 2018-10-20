@@ -50,7 +50,7 @@ class LoginPage extends React.Component<Props, {}> {
                 <title>Login page - RCB</title>
             </Helmet>
             
-            {this.props.indicators.operationLoading ? <Loader /> : ""}
+            <Loader show={this.props.indicators.operationLoading} />
 
             <div id="loginContainer">
 

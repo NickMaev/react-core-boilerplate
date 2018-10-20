@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { PagingBar } from "@Components/shared/PagingBar";
 import { PersonEditor } from "@Components/person/PersonEditor";
 import { Modal } from "bootstrap3-native";
+import Loader from "@Components/shared/Loader";
 
 type Props = RouteComponentProps<{}> & typeof PersonStore.actionCreators & PersonStore.IState;
 
@@ -147,6 +148,8 @@ class ExamplePage extends React.Component<Props, IState> {
             <Helmet>
                 <title>Example - RCB</title>
             </Helmet>
+             
+            <Loader show={this.props.indicators.operationLoading} />
 
             <div className="panel panel-default">
                 <div className="panel-body">
