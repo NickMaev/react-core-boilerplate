@@ -1,12 +1,19 @@
 ﻿import "@Styles/loader.scss";
 import * as React from "react";
 import { isNode } from "@Utils";
+import AppComponent from "@Components/shared/AppComponent";
+import { PureComponent } from "react";
 
 export interface IProps {
     show: boolean;
 }
 
-export default class Loader extends React.Component<IProps, {}> {
+export default class Loader extends AppComponent<IProps, {}> {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
 
         var css = {"display": "block"};
@@ -15,7 +22,7 @@ export default class Loader extends React.Component<IProps, {}> {
             css = { "display": (this.props.show ? "block" : "none") }
         }
 
-        return <div className="loader-bg" style={css}>
+        return <div key={this.renderKey} className="loader-bg" style={css}>
                    <div className="sk-circle">
                        <div className="sk-circle1 sk-child"></div>
                        <div className="sk-circle2 sk-child"></div>

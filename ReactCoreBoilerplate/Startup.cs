@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ReactCoreBoilerplate.Extensions.Microsoft.Extensions.DependencyInjection;
+using ReactCoreBoilerplate.Infrastructure;
 using ReactCoreBoilerplate.Services;
+using Serilog;
 
 namespace ReactCoreBoilerplate
 {
@@ -26,6 +29,11 @@ namespace ReactCoreBoilerplate
         {
             Configuration.GetSection("AppSettings").Bind(AppSettings.Default);
 
+            services.AddLogging(loggingBuilder =>
+                loggingBuilder
+                    .AddSerilog(dispose: true)
+                    .AddAzureWebAppDiagnostics()
+                );
             services.AddMvc();
             services.AddNodeServices();
             services.AddSpaPrerenderer();
@@ -40,6 +48,8 @@ namespace ReactCoreBoilerplate
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
+
             // Build your own authorization system or use Identity.
             app.Use(async (context, next) =>
             {

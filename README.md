@@ -5,6 +5,7 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 # Changes
 Version | Date | Description
 ---|---|---
+1.3.0 | 2018-10-22 | Updated React package. Added the `AppComponent` component which allows you to do the "force update" of the "stucked" components (for ex. `Loader` component in `LoginPage`). Added Serilog logger which log into files (`logs/` directory) and also into Azure Cloud Provider.
 1.2.1 | 2018-10-20 | Fixed `Loader` component which worked incorrect with SSR in some cases.
 1.2 | 2018-10-18 | Updated dependency of "ASP.NET Core" package due to vulnerability. Added feature which allows you to pass JSON objects to URL query for GET and DELETE methods.
 1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router. If you want to fix it manually, see the commit [here](https://github.com/NickMaev/react-core-boilerplate/commit/34bef1c42879e73985633275c8fb499415c60d8a).
@@ -38,6 +39,7 @@ Third-party libraries:
 * [Axios](https://github.com/axios/axios) - isomorphic fetch util.
 * [ts-nameof](https://github.com/dsherret/ts-nameof) - allows you to use type-safe names of inputs in form.
 * [json-to-url](https://www.npmjs.com/package/json-to-url) - allows you to pass JSON objects to URL query for GET and DELETE methods.
+* [Serilog](https://serilog.net/) - allows you to log into files (`logs/` directory) and also into Azure Cloud Provider.
 
 Own libraries / fixed forks:
 * [domain-wait](https://github.com/NickMaev/domain-wait) - domain-task replacement with async/await support.
@@ -46,7 +48,13 @@ Own libraries / fixed forks:
 * [NSerializeJson](https://github.com/NickMaev/NSerializeJson) - flexible form to JSON serializer based on Vanilla JS.
 * [bootstrap3-native](https://github.com/NickMaev/bootstrap3-native) - fixed [bootstrap.native](https://github.com/thednp/bootstrap.native) with types.
 
-Structure:
+# Issues
+## Known issues
+* If you have "HTTP Error 502.5", you must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" using this link: https://www.microsoft.com/net/download/dotnet-core/2.1
+## Other issues
+* If you will have any issue with project starting, you can see errors in logs ("/logs" directory). Please, do this before the open an issue on GitHub.
+
+# Project structure:
 ```shell
 |   .gitignore
 |   AppSettings.cs
@@ -78,6 +86,7 @@ Structure:
 |   |   |       PersonEditor.tsx	# Example component.
 |   |   |       
 |   |   \---shared					# Shared components.
+|   |           AppComponent.tsx	# Allows you to make the "force update" of the stucked components.
 |   |           AppRoute.tsx		# Component for building routes with more than one layouts.
 |   |           ErrorBoundary.tsx	# Component based on the error boundary pattern.
 |   |           Footer.tsx			# Footer for authorized layout.
@@ -131,6 +140,7 @@ Structure:
 |       ServiceCollectionExtensions.cs	# Incapsulates methods which allow you to define lazy DI-containers.
 |       
 +---Infrastructure					# Folder for the infranstructure classes.
+|       ExceptionMiddleware.cs		# Middleware which allows you to catch exceptions during the runtime.
 |       Result.cs					# Result pattern realization on the server-side.
 |       ServiceBase.cs				# Facade as service pattern base class.
 |       

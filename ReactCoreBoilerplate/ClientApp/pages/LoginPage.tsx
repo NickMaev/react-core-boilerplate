@@ -9,6 +9,7 @@ import * as React from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { Redirect, RouteComponentProps } from "react-router";
+import { setTimeout } from "timers";
 
 type Props = RouteComponentProps<{}> & typeof LoginStore.actionCreators & LoginStore.IState;
 
@@ -20,13 +21,20 @@ class LoginPage extends React.Component<Props, {}> {
         this.onClickSubmitBtn = this.onClickSubmitBtn.bind(this);
     }
 
+    elLoader: Loader;
     elForm: HTMLFormElement;
     nval: NValTippy;
 
     componentDidMount() {
+        
         this.props.init();
+
         if (this.elForm != null) {
             this.nval = new NValTippy(this.elForm);
+        }
+
+        if (this.elLoader) {
+            this.elLoader.forceUpdate();
         }
     }
 
@@ -50,7 +58,7 @@ class LoginPage extends React.Component<Props, {}> {
                 <title>Login page - RCB</title>
             </Helmet>
             
-            <Loader show={this.props.indicators.operationLoading} />
+            <Loader ref={x => this.elLoader = x} show={this.props.indicators.operationLoading} />
 
             <div id="loginContainer">
 
@@ -66,8 +74,7 @@ class LoginPage extends React.Component<Props, {}> {
                         <input type="password" name={nameof<ILoginModel>(x=>x.password)} data-value-type="string" className="form-control" id="inputPassword" data-val-required="true" data-msg-required="Password is required." />
                     </div>
                     <div className="form-inline">
-                        <button className="btn btn-success" onClick={this.onClickSubmitBtn}>Sign in</button>&nbsp;
-                        <button className="btn btn-info">Register</button>
+                        <button className="btn btn-success" onClick={this.onClickSubmitBtn}>Sign in</button>
                     </div>
                 </form>
             </div>
