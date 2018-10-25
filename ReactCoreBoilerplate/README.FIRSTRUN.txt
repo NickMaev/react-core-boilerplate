@@ -12,8 +12,11 @@ More info: https://github.com/NickMaev/react-core-boilerplate
 	Type `npm run build:dev` to do this.
 
 # Known issues
-	If you have "HTTP Error 502.5", you must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" 
+	* HTTP Error 502.5
+	You must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" 
 	using this link: https://www.microsoft.com/net/download/dotnet-core/2.1
+	* HTTP error 500 when hosted in Azure
+	Set the "WEBSITE_NODE_DEFAULT_VERSION" to 6.11.2 in the "app settings" in Azure.
 
 
 # Other issues

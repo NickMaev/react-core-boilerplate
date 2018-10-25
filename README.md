@@ -1,20 +1,21 @@
-![](https://habrastorage.org/webt/uk/yi/uy/ukyiuyzyeahoi3rebyllgcqv8ao.png)
-
-Project template available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
-
-# Changes
-Version | Date | Description
----|---|---
-1.3.0 | 2018-10-22 | Updated React package. Added the `AppComponent` component which allows you to do the "force update" of the "stucked" components (for ex. `Loader` component in `LoginPage`). Added Serilog logger which log into files (`logs/` directory) and also into Azure Cloud Provider.
-1.2.1 | 2018-10-20 | Fixed `Loader` component which worked incorrect with SSR in some cases.
-1.2 | 2018-10-18 | Updated dependency of "ASP.NET Core" package due to vulnerability. Added feature which allows you to pass JSON objects to URL query for GET and DELETE methods.
-1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router. If you want to fix it manually, see the commit [here](https://github.com/NickMaev/react-core-boilerplate/commit/34bef1c42879e73985633275c8fb499415c60d8a).
-
 # Description
 React Core Boilerplate is a starting point for building universal/isomorphic React applications with ASP.NET Core 2.
 It bases on the TypeScript and other libraries for creating powerfull web applications.
 All work fine out of the box. Also is helpful for newbies.
 The project contains a fake authorization system, so you can change it to Identity or another.
+Project template available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
+# Screenshots
+![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
+![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
+![](https://habrastorage.org/webt/b_/ln/zk/b_lnzk7ci9nikanfpttgvn7bmqk.png)
+# Changes
+Version | Date | Description
+---|---|---
+1.3.2 | 2018-10-25 | Removed unused NPM packages. Added package-lock.json. Fixed project.
+1.3.0 | 2018-10-22 | Updated React package. Added the `AppComponent` component which allows you to do the "force update" of the "stucked" components (for ex. `Loader` component in `LoginPage`). Added Serilog logger which log into files (`logs/` directory) and also into Azure Cloud Provider.
+1.2.1 | 2018-10-20 | Fixed `Loader` component which worked incorrect with SSR in some cases.
+1.2 | 2018-10-18 | Updated dependency of "ASP.NET Core" package due to vulnerability. Added feature which allows you to pass JSON objects to URL query for GET and DELETE methods.
+1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router. If you want to fix it manually, see the commit [here](https://github.com/NickMaev/react-core-boilerplate/commit/34bef1c42879e73985633275c8fb499415c60d8a).
 
 # Usage
 
@@ -50,7 +51,12 @@ Own libraries / fixed forks:
 
 # Issues
 ## Known issues
-* If you have "HTTP Error 502.5", you must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" using this link: https://www.microsoft.com/net/download/dotnet-core/2.1
+* **HTTP Error 502.5**
+
+You must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" using this link: https://www.microsoft.com/net/download/dotnet-core/2.1
+* **HTTP error 500 when hosted in Azure**
+
+Set the "WEBSITE_NODE_DEFAULT_VERSION" to 6.11.2 in the "app settings" in Azure.
 ## Other issues
 * If you will have any issue with project starting, you can see errors in logs ("/logs" directory). Please, do this before the open an issue on GitHub.
 
