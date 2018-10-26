@@ -1,7 +1,7 @@
 # Description
 React Core Boilerplate is a starting point for building universal/isomorphic React applications with ASP.NET Core 2.
 It bases on the TypeScript and other libraries for creating powerfull web applications.
-All work fine out of the box. Also is helpful for newbies.
+All works fine out of the box. Also is helpful for newbies.
 The project contains a fake authorization system, so you can change it to Identity or another.
 Project template available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
 # Screenshots
@@ -11,7 +11,7 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 # Changes
 Version | Date | Description
 ---|---|---
-1.3.5| 2018-10-26 | Updated NPM packages: `react`, `redux`, `react-router`. Replaced due the deprecation `react-router-redux` by the new `connected-react-router`. Fixed `Loader` component which had troubles in some cases.
+1.3.5| 2018-10-26 | Updated NPM packages: `react`, `redux`, `react-router`. Replaced due the deprecation `react-router-redux` by the new `connected-react-router`. Fixed `Loader` component which had trouble in some cases.
 1.3.2 | 2018-10-25 | Removed unused NPM packages. Added package-lock.json. Fixed project.
 1.3.0 | 2018-10-22 | Updated React package. Added the `AppComponent` component which allows you to do the "force update" of the "stucked" components (for ex. `Loader` component in `LoginPage`). Added Serilog logger which log into files (`logs/` directory) and also into Azure Cloud Provider.
 1.2.1 | 2018-10-20 | Fixed `Loader` component which worked incorrect with SSR in some cases.
@@ -34,8 +34,10 @@ Type `npm run build:dev` to do this.
 Third-party libraries:
 * [TypeScript](https://www.typescriptlang.org/) - all frontend based on TypeScript.
 * [React](https://reactjs.org/) - main library which worked as isomorphic.
+* [React Router](https://github.com/ReactTraining/react-router) - router for React.
 * [React-Helmet](https://github.com/nfl/react-helmet) - isomorphic SEO helpers.
 * [Redux](https://redux.js.org/) - store.
+* [Connected React Router](https://github.com/supasate/connected-react-router) - Redux binding for React Router.
 * [SASS](https://sass-lang.com/) - CSS preprocessor.
 * [WebPack 4](https://webpack.js.org/) - bundler.
 * [Axios](https://github.com/axios/axios) - isomorphic fetch util.
