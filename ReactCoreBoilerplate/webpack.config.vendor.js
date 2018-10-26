@@ -35,14 +35,14 @@ module.exports = (env) => {
                 'bootstrap-css-only/css/bootstrap.css',
                 'event-source-polyfill',
                 'history',
+                'connected-react-router',
+                'react-router',
                 'react-helmet',
                 'react',
                 'react-dom',
-                'react-router-dom',
                 'react-redux',
                 'redux',
-                'redux-thunk',
-                'react-router'
+                'redux-thunk'
             ]
         },
         output: {

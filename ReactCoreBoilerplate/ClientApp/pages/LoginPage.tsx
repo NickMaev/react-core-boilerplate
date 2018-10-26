@@ -8,7 +8,7 @@ import { NValTippy } from "nval-tippy";
 import * as React from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import { Redirect, RouteComponentProps } from "react-router";
+import { Redirect, RouteComponentProps, withRouter } from "react-router";
 import { setTimeout } from "timers";
 
 type Props = RouteComponentProps<{}> & typeof LoginStore.actionCreators & LoginStore.IState;
@@ -88,4 +88,4 @@ var component = connect(
     LoginStore.actionCreators // Selects which action creators are merged into the component's props
 )(LoginPage as any);
 
-export default (component as any as typeof LoginPage)
+export default (withRouter(component as any) as any as typeof LoginPage)

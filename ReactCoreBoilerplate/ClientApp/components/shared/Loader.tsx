@@ -2,7 +2,6 @@
 import * as React from "react";
 import { isNode } from "@Utils";
 import AppComponent from "@Components/shared/AppComponent";
-import { PureComponent } from "react";
 
 export interface IProps {
     show: boolean;
@@ -16,7 +15,7 @@ export default class Loader extends AppComponent<IProps, {}> {
 
     render() {
 
-        var css = {"display": "block"};
+        var css = {"display": "none"};
 
         if (!isNode()) {
             css = { "display": (this.props.show ? "block" : "none") }

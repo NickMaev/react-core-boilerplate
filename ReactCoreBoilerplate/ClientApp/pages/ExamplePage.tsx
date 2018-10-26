@@ -1,7 +1,7 @@
 ﻿import "@Styles/main.scss";
 import * as React from "react";
 import { Helmet } from "react-helmet";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import { IPersonModel } from "@Models/IPersonModel";
 import { PersonStore } from "@Store/PersonStore";
 import { ApplicationState } from "@Store/index";
@@ -241,4 +241,4 @@ var component = connect(
     PersonStore.actionCreators // Selects which action creators are merged into the component's props.
 )(ExamplePage as any);
 
-export default (component as any as typeof ExamplePage)
+export default (withRouter(component as any) as any as typeof ExamplePage)
