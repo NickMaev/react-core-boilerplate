@@ -1,11 +1,11 @@
 ﻿@inject Microsoft.AspNetCore.SpaServices.Prerendering.ISpaPrerenderer prerenderer
 @using Newtonsoft.Json
-@model ReactCoreBoilerplate.Models.SessionData
+@model ReactCoreBoilerplate.Models.NodeSession
 @{
     Layout = null;
 
     var prerenderResult = await prerenderer.RenderToString("ClientApp/dist/main-server", customDataParameter: Model);
-    var sessionDataJson = prerenderResult?.Globals?["sessionData"]?.ToString();
+    var publicSessionJson = prerenderResult?.Globals?["nodeSession"]["public"]?.ToString();
     var initialReduxStateJson = prerenderResult?.Globals?["initialReduxState"]?.ToString();
     var helmetStringsPrerender = prerenderResult?.Globals?["helmetStrings"]?.ToString();
 }
@@ -25,7 +25,7 @@
     }
     
     <script>
-        window.sessionData = @Html.Raw(string.IsNullOrEmpty(sessionDataJson) ? "null" : sessionDataJson);    
+        window.publicSession = @Html.Raw(string.IsNullOrEmpty(publicSessionJson) ? "null" : publicSessionJson);    
         window.initialReduxState = @Html.Raw(initialReduxStateJson);
     </script>
 </head>

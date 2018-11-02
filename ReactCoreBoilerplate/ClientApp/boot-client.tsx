@@ -12,12 +12,13 @@ let routes = RoutesModule.routes;
 import "@Styles/main.scss";
 import 'react-toastify/dist/ReactToastify.css';
 import Globals from "@Globals";
-import { ISessionData } from '@Models/ISessionData';
 import { isNode } from '@Utils';
+import { IPublicSession } from "@Models/IPublicSession";
+import { IPrivateSession } from "@Models/IPrivateSession";
 
 if (!isNode()) {
     Globals.reset();
-    Globals.init(window["sessionData"] as ISessionData);
+    Globals.init({ public: window["publicSession"] as IPublicSession, private: {} as IPrivateSession });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ReactCoreBoilerplate.Models;
 
@@ -8,12 +9,19 @@ namespace ReactCoreBoilerplate.Controllers
     {
         public IActionResult Index()
         {
-            var sessionData = new SessionData
+            var nodeSession = new NodeSession
             {
-                ServiceUser = ServiceUser
+                Private = new PrivateSession
+                {
+                    Cookie = string.Join(", ", Request.Cookies.Select(x=>$"{x.Key}={x.Value};"))
+                },
+                Public = new PublicSession
+                {
+                    ServiceUser = ServiceUser
+                }
             };
 
-            return View(sessionData);
+            return View(nodeSession);
         }
 
         public IActionResult Error()

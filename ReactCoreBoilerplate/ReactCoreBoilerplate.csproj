@@ -40,7 +40,6 @@
     <None Remove="ClientApp\models\ILoginModel.ts" />
     <None Remove="ClientApp\models\IPersonModel.ts" />
     <None Remove="ClientApp\models\IServiceUser.ts" />
-    <None Remove="ClientApp\models\ISessionData.ts" />
     <None Remove="ClientApp\models\Result.ts" />
     <None Remove="ClientApp\pages\ExamplePage.tsx" />
     <None Remove="ClientApp\pages\HomePage.tsx" />
@@ -59,7 +58,6 @@
 
   <ItemGroup>
     <Content Include="ClientApp\components\person\PersonEditor.tsx" />
-    <Content Include="ClientApp\models\ISessionData.ts" />
     <Content Include="ClientApp\models\IPersonModel.ts" />
     <Content Include="ClientApp\models\Result.ts" />
     <Content Include="ClientApp\components\shared\AppRoute.tsx" />

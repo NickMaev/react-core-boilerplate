@@ -1,8 +1,10 @@
 ﻿import { Ui } from "@Ui";
 import Result from "@Models/Result";
-import Axios from "axios";
+import Axios, { AxiosRequestConfig } from "axios";
 import { transformUrl } from "domain-wait";
 import jsonToUrl from "json-to-url";
+import { isNode } from "@Utils";
+import Globals from "@Globals";
 
 export interface IRequestOptions {
     url: string;
@@ -10,8 +12,21 @@ export interface IRequestOptions {
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 }
 
+export interface ISendFormDataOptions {
+    url: string;
+    data: FormData;
+    method: "POST" | "PUT" | "PATCH";
+}
+
+/**
+ * Represents base class of the isomorphic service.
+ */
 export abstract class ServiceBase {
 
+    /**
+     * Make request with JSON data.
+     * @param opts
+     */
     public static async requestJson<T>(opts: IRequestOptions): Promise<Result<T>> {
 
         var axiosResult = null;
@@ -19,43 +34,91 @@ export abstract class ServiceBase {
 
         opts.url = transformUrl(opts.url); // Allow requests also for Node.
 
-        var processQueryUrl = (url: string, data: any) : string => {
+        var processQuery = (url: string, data: any): string => {
             if (data) {
-                if (url.endsWith("/")) {
-                    url = url.substring(0, url.length - 1);
-                }
                 return `${url}?${jsonToUrl(data)}`;
             }
-            return `${opts.url}`;
+            return url;
         };
+
+        var axiosRequestConfig : AxiosRequestConfig;
+
+        if (isNode()) {
+            // Used for SSR requests from the web server to NodeServices.
+            axiosRequestConfig = {
+                headers: {
+                    Cookie: Globals.getData().private.cookie
+                }
+            }
+        }
 
         try {
             switch (opts.method) {
-            case "GET":
-                axiosResult = await Axios.get(processQueryUrl(opts.url, opts.data));
-                break;
-            case "POST":
-                axiosResult = await Axios.post(opts.url, opts.data);
-                break;
-            case "PUT":
-                axiosResult = await Axios.put(opts.url, opts.data);
-                break;
-            case "PATCH":
-                axiosResult = await Axios.patch(opts.url, opts.data);
-                break;
-            case "DELETE":
-                axiosResult = await Axios.delete(processQueryUrl(opts.url, opts.data));
-                break;
+                case "GET":
+                    axiosResult = await Axios.get(processQuery(opts.url, opts.data), axiosRequestConfig);
+                    break;
+                case "POST":
+                    axiosResult = await Axios.post(opts.url, opts.data, axiosRequestConfig);
+                    break;
+                case "PUT":
+                    axiosResult = await Axios.put(opts.url, opts.data, axiosRequestConfig);
+                    break;
+                case "PATCH":
+                    axiosResult = await Axios.patch(opts.url, opts.data, axiosRequestConfig);
+                    break;
+                case "DELETE":
+                    axiosResult = await Axios.delete(processQuery(opts.url, opts.data), axiosRequestConfig);
+                    break;
             }
             result = new Result(axiosResult.data.value, ...axiosResult.data.errors);
         } catch (error) {
             result = new Result(null, error.message);
         }
-        
+
         if (result.hasErrors) {
             Ui.showErrors(...result.errors);
         }
 
-        return new Promise(resolve => resolve(result)) as Promise<Result<T>>;
+        return result;
+    }
+
+    /**
+     * Allows you to send files to the server.
+     * @param opts
+     */
+    public static async sendFormData<T>(opts: ISendFormDataOptions): Promise<Result<T>> {
+        var axiosResult = null;
+        var result = null;
+
+        opts.url = transformUrl(opts.url); // Allow requests also for Node.
+
+        var axiosOpts = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+
+        try {
+            switch (opts.method) {
+                case "POST":
+                    axiosResult = await Axios.post(opts.url, opts.data, axiosOpts);
+                    break;
+                case "PUT":
+                    axiosResult = await Axios.put(opts.url, opts.data, axiosOpts);
+                    break;
+                case "PATCH":
+                    axiosResult = await Axios.patch(opts.url, opts.data, axiosOpts);
+                    break;
+            }
+            result = new Result(axiosResult.data.value, ...axiosResult.data.errors);
+        } catch (error) {
+            result = new Result(null, error.message);
+        }
+
+        if (result.hasErrors) {
+            Ui.showErrors(...result.errors);
+        }
+
+        return result;
     }
 }

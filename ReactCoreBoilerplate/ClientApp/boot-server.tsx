@@ -9,8 +9,7 @@ import { routes } from './routes';
 import configureStore from './configureStore';
 import { Helmet } from 'react-helmet';
 import Globals from "@Globals";
-import { ISessionData } from '@Models/ISessionData';
-import { ApplicationState } from "@Store/index";
+import { INodeSession } from "@Models/INodeSession";
 
 var renderHelmet = (): string => {
     var helmetData = Helmet.renderStatic();
@@ -21,20 +20,20 @@ var renderHelmet = (): string => {
         }
     }
     return helmetStrings;
-}
+};
 
-var createGlobals = (sessionData, initialReduxState, helmetStrings) => {
+var createGlobals = (nodeSession, initialReduxState, helmetStrings) => {
     return {
-        sessionData,
+        nodeSession,
         initialReduxState,
         helmetStrings
     };
-}
+};
 
 export default createServerRenderer((params) => {
 
     Globals.reset();
-    Globals.init(params.data as ISessionData);
+    Globals.init(params.data as INodeSession);
 
     return new Promise<RenderResult>((resolve, reject) => {
 
