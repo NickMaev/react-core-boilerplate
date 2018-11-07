@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
@@ -35,7 +36,21 @@ module.exports = (env) => {
         },
         module: {
             rules: [
-                { test: /\.tsx?$/, include: /ClientApp/, use: ['babel-loader', 'ts-loader', 'ts-nameof-loader'] },
+                { test: /\.tsx?$/, include: /ClientApp/, 
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                        }, 
+                        {
+                            loader: 'ts-loader',
+                            options: {
+                                // disable type checker - we will use it in fork plugin
+                                transpileOnly: true,
+                                experimentalWatchApi: true
+                            }
+                        }, 
+                        'ts-nameof-loader']
+                },
                 {
                     test: /\.(gif|png|jpe?g|svg)$/i,
                     use: [
@@ -48,7 +63,7 @@ module.exports = (env) => {
             ]
         },
         plugins: [
-
+            new ForkTsCheckerWebpackPlugin()
         ]
     });
 

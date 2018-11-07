@@ -1,4 +1,5 @@
 ﻿import * as React from "react";
+import bind from 'bind-decorator';
 
 /**
  * This component contains helpful method which
@@ -13,14 +14,13 @@ export default abstract class AppComponent<TProps = {}, TState = {}> extends Rea
 
     constructor(props) {
         super(props);
-
-        this.forceUpdate = this.forceUpdate.bind(this);
     }
 
     /**
      * Call this if component state is stuck.
      * But you should set the renderKey to the element's attribute.
      */
+    @bind
     public forceUpdate() {
         this.renderKey = Math.random();
     }

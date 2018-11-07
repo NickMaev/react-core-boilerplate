@@ -1,8 +1,5 @@
-﻿import { ILoginModel } from "@Models/ILoginModel";
-import { IServiceUser } from "@Models/IServiceUser";
-import { clone } from "@Utils";
+﻿import { clone } from "@Utils";
 import { Action, Reducer } from "redux";
-import AccountService from "@Services/AccountService";
 import { AppThunkAction } from "./index";
 import PersonService from "@Services/PersonService";
 import { IPersonModel } from "@Models/IPersonModel";
@@ -18,6 +15,7 @@ export module PersonStore {
     }
 
     export enum Actions {
+
         GetAllRequest = "PERSON_GET_ALL_REQUEST",
         GetAllResponse = "PERSON_GET_ALL_RESPONSE",
         AddRequest = "PERSON_ADD_REQUEST",
@@ -72,10 +70,12 @@ export module PersonStore {
 
     export const actionCreators = {
         getAllRequest: (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
-
-            dispatch({ type: Actions.GetAllRequest });
-
+            
             await wait(async (transformUrl) => {
+                
+                // Wait for server prerendering.
+                dispatch({ type: Actions.GetAllRequest });
+
                 var result = await PersonService.getAll();
                 if (!result.hasErrors) {
                     dispatch({ type: Actions.GetAllResponse, payload: result.value });
@@ -86,35 +86,29 @@ export module PersonStore {
 
             dispatch({ type: Actions.AddRequest });
 
-            await wait(async (transformUrl) => {
-                var result = await PersonService.add(model);
-                if (!result.hasErrors) {
-                    model.id = result.value;
-                    dispatch({ type: Actions.AddResponse, payload: model });
-                }
-            });
+            var result = await PersonService.add(model);
+            if (!result.hasErrors) {
+                model.id = result.value;
+                dispatch({ type: Actions.AddResponse, payload: model });
+            }
         },
         updateRequest: (model: IPersonModel): AppThunkAction<KnownAction> => async (dispatch, getState) => {
 
             dispatch({ type: Actions.UpdateRequest });
 
-            await wait(async (transformUrl) => {
-                var result = await PersonService.update(model);
-                if (!result.hasErrors) {
-                    dispatch({ type: Actions.UpdateResponse, payload: model });
-                }
-            });
+            var result = await PersonService.update(model);
+            if (!result.hasErrors) {
+                dispatch({ type: Actions.UpdateResponse, payload: model });
+            }
         },
         deleteRequest: (id: number): AppThunkAction<KnownAction> => async (dispatch, getState) => {
 
             dispatch({ type: Actions.DeleteRequest });
 
-            await wait(async (transformUrl) => {
-                var result = await PersonService.delete(id);
-                if (!result.hasErrors) {
-                    dispatch({ type: Actions.DeleteResponse, id });
-                }
-            });
+            var result = await PersonService.delete(id);
+            if (!result.hasErrors) {
+                dispatch({ type: Actions.DeleteResponse, id });
+            }
         }
     }
 

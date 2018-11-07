@@ -1,8 +1,8 @@
 import { IPersonModel } from "@Models/IPersonModel";
 import * as React from "react";
-import { NValTippy } from "nval-tippy";
-import { NSerializeJson } from "NSerializeJson";
-import { isObjectEmpty } from "@Utils";
+import bind from 'bind-decorator';
+import { Form } from "@Components/shared/Form";
+import Input from "@Components/shared/Input";
 
 export interface IProps {
     data: IPersonModel;
@@ -13,28 +13,24 @@ export class PersonEditor extends React.Component<IProps, {}> {
         super(props);
     }
 
-    private nvalTippy: NValTippy;
+    public elForm: Form;
 
-    private elForm: HTMLFormElement;
+    @bind
+    public emptyForm(): void {
+        if (this.elForm) {
+            this.elForm.emptyForm();
+        }
+    }
 
     componentDidMount() {
-        this.nvalTippy = new NValTippy(this.elForm);
-    }
-
-    public isValid(): boolean {
-        return this.nvalTippy.isValid();
-    }
-
-    public getData(): IPersonModel {
-        return NSerializeJson.serializeForm(this.elForm) as IPersonModel;
     }
 
     render() {
-        return <form className="form" ref={x => this.elForm = x}>
+        return <Form className="form" ref={x => this.elForm = x}>
             <input type="hidden" name="id" defaultValue={(this.props.data.id || 0).toString()} />
             <div className="form-group">
                 <label className="control-label required" htmlFor="person__firstName">First name</label>
-                <input
+                <Input
                     type="text"
                     className="form-control"
                     id="person__firstName"
@@ -42,12 +38,12 @@ export class PersonEditor extends React.Component<IProps, {}> {
                     data-value-type="string"
                     data-val-required="true"
                     data-msg-required="First name is required."
-                    defaultValue={this.props.data.firstName}
+                    value={this.props.data.firstName}
                 />
             </div>
             <div className="form-group">
                 <label className="control-label required" htmlFor="person__lastName">Last name</label>
-                <input
+                <Input
                     type="text"
                     className="form-control"
                     id="person__lastName"
@@ -55,9 +51,9 @@ export class PersonEditor extends React.Component<IProps, {}> {
                     data-value-type="string"
                     data-val-required="true"
                     data-msg-required="Last name is required."
-                    defaultValue={this.props.data.lastName}
+                    value={this.props.data.lastName}
                 />
             </div>
-        </form>;
+        </Form>;
     }
 }

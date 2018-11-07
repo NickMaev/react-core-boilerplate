@@ -22,15 +22,12 @@
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Compile Remove="ClientApp\domain-task\**" />
     <Compile Remove="ClientApp\helpers\**" />
-    <Compile Remove="ClientApp\libs\**" />
     <Content Remove="ClientApp\**" />
     <Content Remove="ClientApp\domain-task\**" />
     <EmbeddedResource Remove="ClientApp\domain-task\**" />
     <EmbeddedResource Remove="ClientApp\helpers\**" />
-    <EmbeddedResource Remove="ClientApp\libs\**" />
     <None Remove="ClientApp\domain-task\**" />
     <None Remove="ClientApp\helpers\**" />
-    <None Remove="ClientApp\libs\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +79,7 @@
     <TypeScriptCompile Include="ClientApp\services\AccountService.ts" />
     <TypeScriptCompile Include="ClientApp\store\PersonStore.ts" />
     <TypeScriptCompile Include="ClientApp\store\LoginStore.ts" />
+    <TypeScriptCompile Include="node_modules\domain-wait\src\DomainTask.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

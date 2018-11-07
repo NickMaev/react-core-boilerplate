@@ -4,15 +4,16 @@ import { NavLink, Redirect } from "react-router-dom";
 import Globals from "@Globals";
 import AccountService from "@Services/AccountService";
 import { Dropdown } from "bootstrap3-native";
+import bind from 'bind-decorator';
 
 class TopMenu extends React.Component<{}, { logoutAction: boolean }> {
 
     constructor(props) {
         super(props);
         this.state = { logoutAction: false };
-        this.onClickSignOut = this.onClickSignOut.bind(this);
     }
 
+    @bind
     async onClickSignOut(e: React.MouseEvent<HTMLAnchorElement>) {
         e.preventDefault();
 

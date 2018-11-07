@@ -1,5 +1,6 @@
 import Pagination, { PaginationProps } from "react-paginating";
 import * as React from "react";
+import bind from 'bind-decorator';
 
 export interface IProps {
     totalResults: number;
@@ -16,18 +17,17 @@ export class PagingBar extends React.Component<IProps, {}> {
 
     constructor(props) {
         super(props);
-
-        this.setFirstPage = this.setFirstPage.bind(this);
-        this.setLastPage = this.setLastPage.bind(this);
     }
 
     protected elFirstPageBtn: HTMLElement;
     protected elLastPageBtn: HTMLElement;
 
+    @bind
     public setFirstPage(): void {
         this.elFirstPageBtn.click();
     }
     
+    @bind
     public setLastPage(): void {
         this.elLastPageBtn.click();
     }

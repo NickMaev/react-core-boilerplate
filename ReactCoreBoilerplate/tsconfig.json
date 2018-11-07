@@ -11,6 +11,7 @@
     "strict": false,
     "noImplicitReturns": true, 
     "allowUnusedLabels":  false,
+    "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch":  true,
     "lib": ["es6", "dom"],
     "types": ["webpack-env"],

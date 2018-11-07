@@ -10,7 +10,7 @@
     "@types/react-helmet": "^5.0.7",
     "@types/react-hot-loader": "3.0.3",
     "@types/react-paginate": "^5.2.1",
-    "@types/react-redux": "^6.0.9",
+    "@types/react-redux": "^6.0.8",
     "@types/react-router": "4.0.32",
     "@types/react-router-dom": "4.3.1",
     "@types/react-toastify": "^4.0.1",
@@ -22,7 +22,6 @@
     "aspnet-webpack-react": "^4.0.0",
     "babel-loader": "^8.0.4",
     "css-loader": "^0.28.4",
-    "domain-wait": "^1.0.12",
     "event-source-polyfill": "^0.0.16",
     "file-loader": "2.0.0",
     "ignore-loader": "^0.1.2",
@@ -44,13 +43,15 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.3",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "fork-ts-checker-webpack-plugin": "0.4.14"
   },
   "scripts": {
     "build:dev": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --mode development && node ./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode development",
     "build:prod": "node ./node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --mode production && node ./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode production"
   },
   "dependencies": {
+    "domain-wait": "^1.1.0",
     "bootstrap3-native": "^1.0.11",
     "bootstrap-css-only": "3.3.5",
     "history": "4.7.2",
@@ -69,9 +70,10 @@
     "react-router-config": "4.4.0-beta.4",
     "react-toastify": "^4.3.2",
     "redux": "4.0.1",
-    "redux-thunk": "2.2.0",
+    "redux-thunk": "2.3.0",
     "connected-react-router": "4.5.0",
     "tippy.js": "^2.5.4",
-    "json-to-url": "^1.0.5"
+    "json-to-url": "^1.0.5",
+    "bind-decorator": "1.0.11"
   }
 }

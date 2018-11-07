@@ -7,6 +7,7 @@
     var prerenderResult = await prerenderer.RenderToString("ClientApp/dist/main-server", customDataParameter: Model);
     var publicSessionJson = prerenderResult?.Globals?["nodeSession"]["public"]?.ToString();
     var initialReduxStateJson = prerenderResult?.Globals?["initialReduxState"]?.ToString();
+    var completedTasksJson = prerenderResult?.Globals?["completedTasks"]?.ToString();
     var helmetStringsPrerender = prerenderResult?.Globals?["helmetStrings"]?.ToString();
 }
 
@@ -27,6 +28,7 @@
     <script>
         window.publicSession = @Html.Raw(string.IsNullOrEmpty(publicSessionJson) ? "null" : publicSessionJson);    
         window.initialReduxState = @Html.Raw(initialReduxStateJson);
+        window.completedTasks = @Html.Raw(completedTasksJson);
     </script>
 </head>
 <body>

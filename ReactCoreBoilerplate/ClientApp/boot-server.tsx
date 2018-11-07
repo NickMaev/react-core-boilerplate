@@ -10,6 +10,7 @@ import configureStore from './configureStore';
 import { Helmet } from 'react-helmet';
 import Globals from "@Globals";
 import { INodeSession } from "@Models/INodeSession";
+import { completedTasks } from "domain-wait";
 
 var renderHelmet = (): string => {
     var helmetData = Helmet.renderStatic();
@@ -24,6 +25,7 @@ var renderHelmet = (): string => {
 
 var createGlobals = (nodeSession, initialReduxState, helmetStrings) => {
     return {
+        completedTasks,
         nodeSession,
         initialReduxState,
         helmetStrings

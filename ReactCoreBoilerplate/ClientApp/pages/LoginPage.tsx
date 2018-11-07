@@ -2,14 +2,13 @@
 import Loader from "@Components/shared/Loader";
 import { ApplicationState } from "@Store/index";
 import { LoginStore } from "@Store/LoginStore";
-import "@Styles/main.scss";
-import { NSerializeJson } from "NSerializeJson";
-import { NValTippy } from "nval-tippy";
+import "@Styles/main.scss";;
 import * as React from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { Redirect, RouteComponentProps, withRouter } from "react-router";
-import { setTimeout } from "timers";
+import bind from 'bind-decorator';
+import { Form } from "@Components/shared/Form";
 
 type Props = RouteComponentProps<{}> & typeof LoginStore.actionCreators & LoginStore.IState;
 
@@ -17,32 +16,26 @@ class LoginPage extends React.Component<Props, {}> {
 
     constructor(props: Props) {
         super(props);
-
-        this.onClickSubmitBtn = this.onClickSubmitBtn.bind(this);
     }
 
     elLoader: Loader;
-    elForm: HTMLFormElement;
-    nval: NValTippy;
+    elForm: Form;
 
     componentDidMount() {
         
         this.props.init();
-
-        if (this.elForm != null) {
-            this.nval = new NValTippy(this.elForm);
-        }
-
+        
         if (this.elLoader) {
             this.elLoader.forceUpdate();
         }
     }
 
+    @bind
     private async onClickSubmitBtn(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        if (this.nval.isValid()) {
-            var model = NSerializeJson.serializeForm(this.elForm) as ILoginModel;
-            this.props.loginRequest(model);
+        if (this.elForm.isValid()) {
+            var data = this.elForm.getData<ILoginModel>();
+            this.props.loginRequest(data);
         }
     }
 
@@ -64,7 +57,7 @@ class LoginPage extends React.Component<Props, {}> {
 
                 <p className="text-center">Type any login and password to enter.</p>
 
-                <form ref={x => this.elForm = x}>
+                <Form ref={x => this.elForm = x}>
                     <div className="form-group">
                         <label htmlFor="inputLogin">Login</label>
                         <input type="text" name={nameof<ILoginModel>(x=>x.login)} data-value-type="string" className="form-control" id="inputLogin" data-val-required="true" data-msg-required="Login is required." />
@@ -76,7 +69,7 @@ class LoginPage extends React.Component<Props, {}> {
                     <div className="form-inline">
                         <button className="btn btn-success" onClick={this.onClickSubmitBtn}>Sign in</button>
                     </div>
-                </form>
+                </Form>
             </div>
 
         </div>;

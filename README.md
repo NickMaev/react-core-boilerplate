@@ -9,19 +9,40 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/b_/ln/zk/b_lnzk7ci9nikanfpttgvn7bmqk.png)
 # Changes
-Version | Date | Description
----|---|---
-1.4.5 | 2018-11-02 | Added new feature allows web application to share browser's cookie with NodeServices. Now SSR generates HTML code for authenticated users and makes authenticated isomorphic requests. Also added method `sendFormData` to the `ServiceBase.ts` which allows you to upload files to the server.
-1.3.5 | 2018-10-26 | Updated NPM packages: `react`, `redux`, `react-router`. Replaced due to deprecation `react-router-redux` by the new `connected-react-router`. Fixed `Loader` component which had trouble in some cases.
-1.3.2 | 2018-10-25 | Removed unused NPM packages. Added package-lock.json. Fixed project.
-1.3.0 | 2018-10-22 | Updated React package. Added the `AppComponent` component which allows you to do the "force update" of the "stucked" components (for ex. `Loader` component in `LoginPage`). Added Serilog logger which log into files (`logs/` directory) and also into Azure Cloud Provider.
-1.2.1 | 2018-10-20 | Fixed `Loader` component which worked incorrect with SSR in some cases.
-1.2 | 2018-10-18 | Updated dependency of "ASP.NET Core" package due to vulnerability. Added feature which allows you to pass JSON objects to URL query for GET and DELETE methods.
-1.1 | 2018-10-16 | Fixed `AppRoute` component. Solved issue with passing params to components from React Router. If you want to fix it manually, see the commit [here](https://github.com/NickMaev/react-core-boilerplate/commit/34bef1c42879e73985633275c8fb499415c60d8a).
+##### v. 1.5.0 (2018-11-07)
+* Added `hosting.json` which contains hosting settings and will be used in the production build.
+* Added `bind-decorator` package and examples with it.
+* Speeded up of WebPack bundle building.
+* Updated domain-wait package. This update allows you to prevent calling for isomorphic fetch requests twice (in server prerender and after it - on client side).
+* Updated redux-thunk package. 
+* Added new React components to prevent a headake when you build web applications: `ModalComponent`, `Input`, `MultiSelect`, `Form`. This components are used in examples.
+##### v. 1.4.5 (2018-11-02)
+* Added new feature allows web application to share browser's cookie with NodeServices. Now SSR generates HTML code for authenticated users and makes authenticated isomorphic requests. 
+* Added method `sendFormData` to the `ServiceBase.ts` which allows you to upload files to the server.
+##### v. 1.3.5 (2018-10-26)
+* Updated NPM packages: `react`, `redux`, `react-router`. 
+* Replaced due to deprecation `react-router-redux` by the new `connected-react-router`.
+* Fixed `Loader` component which had trouble in some cases.
+##### v. 1.3.2 (2018-10-25)
+* Removed unused NPM packages.
+* Added package-lock.json. 
+* Fixed project.
+##### v. 1.3.0 (2018-10-22)
+* Updated React package. 
+* Added the `AppComponent` component which allows you to do the "force update" of the "stucked" components (for ex. `Loader` component in `LoginPage`). 
+* Added Serilog logger which log into files (`logs/` directory) and also into Azure Cloud Provider.
+##### v. 1.2.1 (2018-10-20)
+* Fixed `Loader` component which worked incorrect with SSR in some cases.
+##### v. 1.2.0 (2018-10-18)
+* Updated dependency of "ASP.NET Core" package due to vulnerability.
+* Added feature which allows you to pass JSON objects to URL query for GET and DELETE methods.
+##### v. 1.1.0 (2018-10-16)
+* Fixed `AppRoute` component. Solved issue with passing params to components from React Router. If you want to fix it manually, see the commit [here](https://github.com/NickMaev/react-core-boilerplate/commit/34bef1c42879e73985633275c8fb499415c60d8a).
 
 # Usage
 
 ## Installation
+0. Install of the latest stable [Node.js](https://nodejs.org/en/).
 1. At the first run you must close project if it runs in Visual Studio or another IDE. 
 Open project's folder in console and run command `npm install`.
 2. Type `npm run build:dev` for development, it will compile the main and vendor bundle.
@@ -47,7 +68,7 @@ Third-party libraries:
 * [Serilog](https://serilog.net/) - allows you to log into files (`logs/` directory) and also into Azure Cloud Provider.
 
 Own libraries / fixed forks:
-* [domain-wait](https://github.com/NickMaev/domain-wait) - domain-task replacement with async/await support.
+* [domain-wait](https://github.com/NickMaev/domain-wait) - domain-task replacement with async/await support and new features.
 * [NVal](https://github.com/NickMaev/NVal) - jQuery-validation-like Vanilla JS validator.
 * [NVal-Tippy](https://github.com/NickMaev/NVal-Tippy) - Vanilla JS validation with awesome tooltips.
 * [NSerializeJson](https://github.com/NickMaev/NSerializeJson) - flexible form to JSON serializer based on Vanilla JS.
@@ -55,6 +76,11 @@ Own libraries / fixed forks:
 
 # Issues
 ## Known issues
+
+* **HTTP Error 500**
+
+Probably you don't have the latest version of Node.js.
+
 * **HTTP Error 502.5**
 
 You must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" using this link: https://www.microsoft.com/net/download/dotnet-core/2.1

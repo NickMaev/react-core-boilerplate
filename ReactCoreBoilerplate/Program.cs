@@ -25,6 +25,13 @@ namespace ReactCoreBoilerplate
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+#if !DEBUG
+                .UseConfiguration(new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("hosting.json", optional: true)
+                    .Build()
+                )
+#endif
                 .UseStartup<Startup>()
                 .Build();
     }

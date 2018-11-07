@@ -8,8 +8,9 @@ import { ApplicationState } from "@Store/index";
 import { connect } from "react-redux";
 import { PagingBar } from "@Components/shared/PagingBar";
 import { PersonEditor } from "@Components/person/PersonEditor";
-import { Modal } from "bootstrap3-native";
 import Loader from "@Components/shared/Loader";
+import bind from 'bind-decorator';
+import { ModalComponent } from "@Components/shared/ModalComponent";
 
 type Props = RouteComponentProps<{}> & typeof PersonStore.actionCreators & PersonStore.IState;
 
@@ -24,13 +25,9 @@ class ExamplePage extends React.Component<Props, IState> {
 
     private pagingBar: PagingBar;
 
-    private elModalAdd: HTMLDivElement;
-    private elModalEdit: HTMLDivElement;
-    private elModalDelete: HTMLDivElement;
-
-    private modalAdd: any;
-    private modalEdit: any;
-    private modalDelete: any;
+    private elModalAdd: ModalComponent;
+    private elModalEdit: ModalComponent;
+    private elModalDelete: ModalComponent;
 
     private personEditorAdd: PersonEditor;
     private personEditorEdit: PersonEditor;
@@ -44,87 +41,75 @@ class ExamplePage extends React.Component<Props, IState> {
             rowOffset: 0,
             modelForEdit: {}
         };
-
-        this.onChangePage = this.onChangePage.bind(this);
-
-        this.renderRow = this.renderRow.bind(this);
-        this.renderRows = this.renderRows.bind(this);
-
-        this.onClickShowAddModal = this.onClickShowAddModal.bind(this);
-        this.onClickShowEditModal = this.onClickShowEditModal.bind(this);
-        this.onClickShowDeleteModal = this.onClickShowDeleteModal.bind(this);
-
-        this.onClickPersonEditorAdd__saveBtn = this.onClickPersonEditorAdd__saveBtn.bind(this);
-        this.onClickPersonEditorEdit__saveBtn = this.onClickPersonEditorEdit__saveBtn.bind(this);
-        this.onClickPersonEditorDelete__saveBtn = this.onClickPersonEditorDelete__saveBtn.bind(this);
     }
 
     componentWillMount() {
         this.props.getAllRequest();
     }
 
-    componentDidMount() {
-        var self = this;
-
-        self.modalAdd = new Modal(self.elModalAdd);
-        self.modalEdit = new Modal(self.elModalEdit);
-        self.modalDelete = new Modal(self.elModalDelete);
-    }
-
     componentWillUnmount() {
-        if (this.modalAdd != null) {
-            this.modalAdd.hide();
+        if (this.elModalAdd) {
+            this.elModalAdd.hide();
         }
-        if (this.modalEdit != null) {
-            this.modalEdit.hide();
+        if (this.elModalEdit) {
+            this.elModalEdit.hide();
         }
-        if (this.modalDelete != null) {
-            this.modalDelete.hide();
+        if (this.elModalDelete) {
+            this.elModalDelete.hide();
         }
     }
 
+    @bind
     onChangePage(pageNum: number): void {
         let rowOffset = Math.ceil((pageNum - 1) * this.state.limitPerPage);
         this.setState({ pageNum, rowOffset });
     }
 
+    @bind
     onClickShowAddModal(e: React.MouseEvent<HTMLButtonElement>) {
-        this.modalAdd.show();
+        this.elModalAdd.show();
     }
 
+    @bind
     onClickShowEditModal(e: React.MouseEvent<HTMLButtonElement>, modelForEdit: IPersonModel) {
         this.setState({ modelForEdit });
-        this.modalEdit.show();
+        this.elModalEdit.show();
     }
 
+    @bind
     onClickShowDeleteModal(e: React.MouseEvent<HTMLButtonElement>, modelForEdit: IPersonModel) {
         this.setState({ modelForEdit });
-        this.modalDelete.show();
+        this.elModalDelete.show();
     }
 
+    @bind
     onClickPersonEditorAdd__saveBtn(e: React.MouseEvent<HTMLButtonElement>): void {
         e.preventDefault();
-        if (!this.personEditorAdd.isValid()) {
+        if (!this.personEditorAdd.elForm.isValid()) {
             return;
         }
-        this.props.addRequest(this.personEditorAdd.getData());
+        this.props.addRequest(this.personEditorAdd.elForm.getData());
         this.pagingBar.setLastPage();
-        this.modalAdd.hide();
+        this.elModalAdd.hide();
     }
 
+    @bind
     onClickPersonEditorEdit__saveBtn(e: React.MouseEvent<HTMLButtonElement>): void {
-        if (!this.personEditorEdit.isValid()) {
+        if (!this.personEditorEdit.elForm.isValid()) {
             return;
         }
-        this.props.updateRequest(this.personEditorEdit.getData());
-        this.modalEdit.hide();
+        var data = this.personEditorEdit.elForm.getData();
+        this.props.updateRequest(data);
+        this.elModalEdit.hide();
     }
 
+    @bind
     onClickPersonEditorDelete__saveBtn(e: React.MouseEvent<HTMLButtonElement>): void {
         this.props.deleteRequest(this.state.modelForEdit.id);
-        this.modalDelete.hide();
+        this.elModalDelete.hide();
     }
 
+    @bind
     renderRow(person: IPersonModel) {
         return <tr key={person.id}>
             <td>{person.firstName}</td>
@@ -136,6 +121,7 @@ class ExamplePage extends React.Component<Props, IState> {
         </tr>;
     }
 
+    @bind
     renderRows(data: IPersonModel[]) {
         return data
             .slice(this.state.rowOffset, this.state.rowOffset + this.state.limitPerPage)
@@ -148,7 +134,7 @@ class ExamplePage extends React.Component<Props, IState> {
             <Helmet>
                 <title>Example - RCB</title>
             </Helmet>
-             
+
             <Loader show={this.props.indicators.operationLoading} />
 
             <div className="panel panel-default">
@@ -169,61 +155,47 @@ class ExamplePage extends React.Component<Props, IState> {
             </table>
 
             {/* Add modal */}
-            <div className="modal fade" role="dialog" ref={x => this.elModalAdd = x}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 className="modal-title">Add person</h4>
-                        </div>
-                        <div className="modal-body">
-                            <PersonEditor ref={x => this.personEditorAdd = x} data={{}} />
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={this.onClickPersonEditorAdd__saveBtn}>Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ModalComponent
+                ref={x => this.elModalAdd = x}
+                buttons={<div>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-primary" onClick={this.onClickPersonEditorAdd__saveBtn}>Save</button>
+                </div>}
+                title="Add person"
+                onHide={() => {
+                    if (this.personEditorAdd) {
+                        this.personEditorAdd.emptyForm();
+                    }
+                }}>
+                <PersonEditor ref={x => this.personEditorAdd = x} data={{}} />
+            </ModalComponent>
 
-            {/* Update modal */}
-            <div className="modal fade" role="dialog" ref={x => this.elModalEdit = x}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 className="modal-title">Edit person: {this.state.modelForEdit.firstName} {this.state.modelForEdit.lastName}</h4>
-                        </div>
-                        <div className="modal-body">
-                            <PersonEditor ref={x => this.personEditorEdit = x} data={this.state.modelForEdit} />
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={this.onClickPersonEditorEdit__saveBtn}>Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/* Edit modal */}
+            <ModalComponent
+                ref={x => this.elModalEdit = x}
+                buttons={<div>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-primary" onClick={this.onClickPersonEditorEdit__saveBtn}>Save</button>
+                </div>}
+                title={`Edit person: ${this.state.modelForEdit.firstName} ${this.state.modelForEdit.lastName}`}
+                onHide={() => {
+                    if (this.personEditorEdit) {
+                        this.setState({ modelForEdit: {} });
+                    }
+                }}>
+                <PersonEditor ref={x => this.personEditorEdit = x} data={this.state.modelForEdit} />
+            </ModalComponent>
 
             {/* Delete modal */}
-            <div className="modal fade" role="dialog" ref={x => this.elModalDelete = x}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 className="modal-title">Delete person: {this.state.modelForEdit.firstName} {this.state.modelForEdit.lastName}</h4>
-                        </div>
-                        <div className="modal-body">
-                            <p>Do you really want to delete this person?</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-danger" onClick={this.onClickPersonEditorDelete__saveBtn}>Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ModalComponent
+                ref={x => this.elModalDelete = x}
+                buttons={<div>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-danger" onClick={this.onClickPersonEditorDelete__saveBtn}>Delete</button>
+                </div>}
+                title={`Delete person: ${this.state.modelForEdit.firstName} ${this.state.modelForEdit.lastName}`}>
+                <p>Do you really want to delete this person?</p>
+            </ModalComponent>
 
             <PagingBar
                 ref={x => this.pagingBar = x}
