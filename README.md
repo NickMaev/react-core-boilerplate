@@ -9,7 +9,7 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/b_/ln/zk/b_lnzk7ci9nikanfpttgvn7bmqk.png)
 # Changes
-##### v. 1.5.0 (2018-11-07)
+##### v. 1.5.0(1) (2018-11-07)
 * Added `hosting.json` which contains hosting settings and will be used in the production build.
 * Added `bind-decorator` package and examples with it.
 * Speeded up of WebPack bundle building.

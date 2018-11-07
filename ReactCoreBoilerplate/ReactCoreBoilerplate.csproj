@@ -79,7 +79,6 @@
     <TypeScriptCompile Include="ClientApp\services\AccountService.ts" />
     <TypeScriptCompile Include="ClientApp\store\PersonStore.ts" />
     <TypeScriptCompile Include="ClientApp\store\LoginStore.ts" />
-    <TypeScriptCompile Include="node_modules\domain-wait\src\DomainTask.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
