@@ -7,7 +7,7 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 # Screenshots
 ![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
-![](https://habrastorage.org/webt/b_/ln/zk/b_lnzk7ci9nikanfpttgvn7bmqk.png)
+![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 # Changes
 ##### v. 1.5.2 (2018-12-01)
 * Added fulltext live search to example.
