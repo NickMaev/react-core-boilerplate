@@ -15,13 +15,13 @@ namespace ReactCoreBoilerplate.Controllers
             PersonService = personService;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpGet("[action]")]
+        public IActionResult Search([FromQuery]string term = null)
         {
-            return Json(PersonService.GetAll());
+            return Json(PersonService.Search(term));
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public IActionResult Add(PersonModel model)
         {
             if (model == null)
@@ -30,7 +30,7 @@ namespace ReactCoreBoilerplate.Controllers
             return Json(result);
         }
 
-        [HttpPatch]
+        [HttpPatch("[action]")]
         public IActionResult Update(PersonModel model)
         {
             if (model == null)

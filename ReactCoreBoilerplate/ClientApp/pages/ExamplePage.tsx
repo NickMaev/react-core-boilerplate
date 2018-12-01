@@ -7,19 +7,22 @@ import { PersonStore } from "@Store/PersonStore";
 import { ApplicationState } from "@Store/index";
 import { connect } from "react-redux";
 import { PagingBar } from "@Components/shared/PagingBar";
-import { PersonEditor } from "@Components/person/PersonEditor";
+import PersonEditor from "@Components/person/PersonEditor";
 import Loader from "@Components/shared/Loader";
 import bind from 'bind-decorator';
 import { ModalComponent } from "@Components/shared/ModalComponent";
+import AwesomeDebouncePromise from "awesome-debounce-promise";
 
 type Props = RouteComponentProps<{}> & typeof PersonStore.actionCreators & PersonStore.IState;
 
 interface IState {
+    searchTerm: string;
     pageNum: number;
     limitPerPage: number;
     rowOffset: number;
     modelForEdit: IPersonModel;
 }
+
 
 class ExamplePage extends React.Component<Props, IState> {
 
@@ -32,19 +35,26 @@ class ExamplePage extends React.Component<Props, IState> {
     private personEditorAdd: PersonEditor;
     private personEditorEdit: PersonEditor;
 
+    private debouncedSearch: (term: string) => void;
+
     constructor(props: Props) {
         super(props);
 
         this.state = {
+            searchTerm: "",
             pageNum: 1,
             limitPerPage: 5,
             rowOffset: 0,
             modelForEdit: {}
         };
+
+        this.debouncedSearch = AwesomeDebouncePromise((term: string) => {
+            props.searchRequest(term);
+        }, 500);
     }
 
     componentWillMount() {
-        this.props.getAllRequest();
+        this.props.searchRequest();
     }
 
     componentWillUnmount() {
@@ -128,6 +138,13 @@ class ExamplePage extends React.Component<Props, IState> {
             .map(x => this.renderRow(x));
     }
 
+    @bind
+    onChangeSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
+        var val = e.currentTarget.value;
+        this.debouncedSearch(val);
+        this.pagingBar.setFirstPage();
+    }
+
     render() {
 
         return <div>
@@ -138,8 +155,19 @@ class ExamplePage extends React.Component<Props, IState> {
             <Loader show={this.props.indicators.operationLoading} />
 
             <div className="panel panel-default">
-                <div className="panel-body">
-                    <button className="btn btn-success" onClick={this.onClickShowAddModal}>Add</button>
+                <div className="panel-body row">
+                    <div className="col-sm-1">
+                        <button className="btn btn-success" onClick={this.onClickShowAddModal}>Add</button>
+                    </div>
+                    <div className="col-sm-11">
+                        <input
+                            type="text"
+                            className="form-control"
+                            defaultValue={""}
+                            onChange={this.onChangeSearchInput}
+                            placeholder={"Search for people..."}
+                        />
+                    </div>
                 </div>
             </div>
 

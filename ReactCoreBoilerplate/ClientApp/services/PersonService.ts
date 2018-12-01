@@ -3,9 +3,12 @@ import Result from "@Models/Result";
 import { IPersonModel } from "@Models/IPersonModel";
 
 export default class PersonService extends ServiceBase {
-    public static async getAll(): Promise<Result<IPersonModel[]>> {
+    public static async search(term: string = null): Promise<Result<IPersonModel[]>> {
+        if (term == null) {
+            term = "";
+        }
         var result = await this.requestJson<IPersonModel[]>({
-            url: "/api/Person",
+            url: `/api/Person/Search?term=${term}`,
             method: "GET"
         });
         return result;
@@ -27,7 +30,7 @@ export default class PersonService extends ServiceBase {
     }
     public static async add(model: IPersonModel): Promise<Result<number>> {
         var result = await this.requestJson<number>({
-            url: "/api/Person",
+            url: "/api/Person/Add",
             method: "POST",
             data: model
         });

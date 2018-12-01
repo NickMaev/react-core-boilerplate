@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NSerializeJson } from "NSerializeJson";
+import { NSerializeJson } from "nserializejson";
 import { emptyForm } from "@Utils";
 import { NValTippy } from "nval-tippy";
 import bind from 'bind-decorator';

@@ -55,7 +55,10 @@ module.exports = (env) => {
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': isDevBuild ? '"development"' : '"production"'
             })            
-        ]
+        ].concat(isDevBuild ? [
+            // Add module names to factory functions so they appear in browser profiler.
+            new webpack.NamedModulesPlugin()
+        ] : [])
     };
 
     const clientBundleConfig = merge(sharedConfig, {

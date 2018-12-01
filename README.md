@@ -9,6 +9,12 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/b_/ln/zk/b_lnzk7ci9nikanfpttgvn7bmqk.png)
 # Changes
+##### v. 1.5.2 (2018-12-01)
+* Added fulltext live search to example.
+* Added Webpack plugins: `case-sensitive-paths-webpack-plugin`, `react-dev-utils`
+* Added plugins with examples:
+`awesome-debounce-promise` to prevent doing frequent queries in live search, `formik` to create forms in React without tears.
+* Fixed some functional and text errors.
 ##### v. 1.5.0(1) (2018-11-07)
 * Added `hosting.json` which contains hosting settings and will be used in the production build.
 * Added `bind-decorator` package and examples with it.
@@ -55,6 +61,7 @@ Type `npm run build:dev` to do this.
 # Elements
 Third-party libraries:
 * [TypeScript](https://www.typescriptlang.org/) - all frontend based on TypeScript.
+* [fork-ts-checker-webpack-plugin](https://github.com/Realytics/fork-ts-checker-webpack-plugin) - Webpack plugin that runs typescript type checker on a separate process.
 * [React](https://reactjs.org/) - main library which worked as isomorphic.
 * [React Router](https://github.com/ReactTraining/react-router) - router for React.
 * [React-Helmet](https://github.com/nfl/react-helmet) - isomorphic SEO helpers.

@@ -1,5 +1,5 @@
 ﻿import { IServiceUser } from "@Models/IServiceUser";
-import { NSerializeJson } from "NSerializeJson";
+import { NSerializeJson } from "nserializejson";
 import { INodeSession } from "@Models/INodeSession";
 
 /**

@@ -1,9 +1,9 @@
-import AuthorizedLayout from '@Layouts/authorizedLayout';
-import GuestLayout from "@Layouts/guestLayout";
-import LoginPage from '@Pages/loginPage';
+import AuthorizedLayout from '@Layouts/AuthorizedLayout';
+import GuestLayout from "@Layouts/GuestLayout";
+import LoginPage from '@Pages/LoginPage';
 import { AppRoute } from "@Components/shared/AppRoute";
 import * as React from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import HomePage from '@Pages/HomePage';
 import ExamplePage from '@Pages/ExamplePage';
 

@@ -15,9 +15,8 @@ export module PersonStore {
     }
 
     export enum Actions {
-
-        GetAllRequest = "PERSON_GET_ALL_REQUEST",
-        GetAllResponse = "PERSON_GET_ALL_RESPONSE",
+        SearchRequest = "PERSON_SEARCH_REQUEST",
+        SearchResponse = "PERSON_SEARCH_RESPONSE",
         AddRequest = "PERSON_ADD_REQUEST",
         AddResponse = "PERSON_ADD_RESPONSE",
         UpdateRequest = "PERSON_UPDATE_REQUEST",
@@ -27,11 +26,11 @@ export module PersonStore {
     }
 
     interface IGetAllRequest {
-        type: Actions.GetAllRequest;
+        type: Actions.SearchRequest;
     }
 
     interface IGetAllResponse {
-        type: Actions.GetAllResponse;
+        type: Actions.SearchResponse;
         payload: IPersonModel[];
     }
 
@@ -69,16 +68,16 @@ export module PersonStore {
         IDeleteRequest | IDeleteResponse;
 
     export const actionCreators = {
-        getAllRequest: (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
+        searchRequest: (term?: string): AppThunkAction<KnownAction> => async (dispatch, getState) => {
             
             await wait(async (transformUrl) => {
                 
                 // Wait for server prerendering.
-                dispatch({ type: Actions.GetAllRequest });
+                dispatch({ type: Actions.SearchRequest });
 
-                var result = await PersonService.getAll();
+                var result = await PersonService.search(term);
                 if (!result.hasErrors) {
-                    dispatch({ type: Actions.GetAllResponse, payload: result.value });
+                    dispatch({ type: Actions.SearchResponse, payload: result.value });
                 }
             });
         },
@@ -125,11 +124,11 @@ export module PersonStore {
         var cloneIndicators = () => clone(currentState.indicators);
 
         switch (action.type) {
-            case Actions.GetAllRequest:
+            case Actions.SearchRequest:
                 var indicators = cloneIndicators();
                 indicators.operationLoading = true;
                 return { ...currentState, indicators };
-            case Actions.GetAllResponse:
+            case Actions.SearchResponse:
                 var indicators = cloneIndicators();
                 indicators.operationLoading = false;
                 return { ...currentState, indicators, people: action.payload };

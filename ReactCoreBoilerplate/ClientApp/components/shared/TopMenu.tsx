@@ -55,7 +55,7 @@ class TopMenu extends React.Component<{}, { logoutAction: boolean }> {
                                 <span className="caret"></span>
                             </a>
                             <ul className="dropdown-menu">
-                                <li><a href="#" onClick={this.onClickSignOut}>Sing out</a></li>
+                                <li><a href="#" onClick={this.onClickSignOut}>Sign out</a></li>
                             </ul>
                         </li>
                     </ul>

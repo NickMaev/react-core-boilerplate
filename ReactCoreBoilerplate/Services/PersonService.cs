@@ -24,8 +24,23 @@ namespace ReactCoreBoilerplate.Services
             };
         }
 
-        public virtual Result<List<PersonModel>> GetAll()
+        public virtual Result<List<PersonModel>> Search(string term = null)
         {
+            if (!string.IsNullOrEmpty(term))
+            {
+                term = term.ToLower();
+
+                var result = 
+                    PeopleList
+                    .Where(x =>
+                        x.FirstName.ToLower().Contains(term) ||
+                        x.LastName.ToLower().Contains(term)
+                    )
+                    .ToList();
+
+                return Ok(result);
+            }
+
             return Ok(PeopleList);
         }
 
