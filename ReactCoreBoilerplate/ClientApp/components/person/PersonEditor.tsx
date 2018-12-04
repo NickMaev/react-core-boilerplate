@@ -27,7 +27,6 @@ export default class PersonEditor extends React.Component<IProps, {}> {
 
     render() {
 
-        var a: IPersonModel = { firstName: "Nick" };
         return <Formik
             enableReinitialize={true}
             initialValues={{
@@ -35,10 +34,6 @@ export default class PersonEditor extends React.Component<IProps, {}> {
                 lastName: this.props.data.lastName || ''
             }}
             onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    setSubmitting(false);
-                }, 400);
             }}
         >
             {({

@@ -7,8 +7,11 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 # Screenshots
 ![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
-![](https://habrastorage.org/webt/b_/ln/zk/b_lnzk7ci9nikanfpttgvn7bmqk.png)
+![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 # Changes
+##### v. 1.5.3 (2018-12-04)
+* Added polyfills for supporting IE9, IE11: `@babel/polyfill`, `custom-event-polyfill`.
+* Updated dependencies.
 ##### v. 1.5.2 (2018-12-01)
 * Added fulltext live search to example.
 * Added Webpack plugins: `case-sensitive-paths-webpack-plugin`, `react-dev-utils`
@@ -48,11 +51,12 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 # Usage
 
 ## Installation
-0. Install of the latest stable [Node.js](https://nodejs.org/en/).
-1. At the first run you must close project if it runs in Visual Studio or another IDE. 
+1. Install latest .NET Core **SDK** and **Runtime** by [link](https://dotnet.microsoft.com/download).
+2. Install of the latest stable [Node.js](https://nodejs.org/en/).
+3. At the first run you must close project if it runs in Visual Studio or another IDE. 
 Open project's folder in console and run command `npm install`.
-2. Type `npm run build:dev` for development, it will compile the main and vendor bundle.
-3. Run project.
+4. Type `npm run build:dev` for development, it will compile the main and vendor bundle.
+5. Run project.
 
 ## Modify WebPack vendor config
 If you modify the WebPack vendor config, you must manually recompile the vendor bundle.

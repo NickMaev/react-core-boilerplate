@@ -6,20 +6,20 @@ const merge = require('webpack-merge');
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
 
-        const sharedConfig = {
-            mode: isDevBuild ? "development" : "production",
-            optimization: {
-                minimize: !isDevBuild
-            },
-            stats: { modules: false },
-            resolve: { extensions: ['.js'] },
-            module: {
-                rules: [
-                    { test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' }
-                ]
-            },
-            entry: {
-                vendor: [
+    const sharedConfig = {
+        mode: isDevBuild ? "development" : "production",
+        optimization: {
+            minimize: !isDevBuild
+        },
+        stats: { modules: false },
+        resolve: { extensions: ['.js'] },
+        module: {
+            rules: [
+                { test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' }
+            ]
+        },
+        entry: {
+            vendor: [
                 'json-to-url',
                 'domain-wait',
                 'react-paginating',
@@ -33,7 +33,6 @@ module.exports = (env) => {
                 'tippy.js',
                 'bootstrap3-native',
                 'bootstrap-css-only/css/bootstrap.css',
-                'event-source-polyfill',
                 'history',
                 'connected-react-router',
                 'react-router',
@@ -42,7 +41,10 @@ module.exports = (env) => {
                 'react-dom',
                 'react-redux',
                 'redux',
-                'redux-thunk'
+                'redux-thunk',
+                'custom-event-polyfill',
+                'event-source-polyfill',
+                '@babel/polyfill',
             ]
         },
         output: {
@@ -54,7 +56,7 @@ module.exports = (env) => {
             new webpack.NormalModuleReplacementPlugin(/\/iconv-loader$/, require.resolve('node-noop')), // Workaround for https://github.com/andris9/encoding/issues/16
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': isDevBuild ? '"development"' : '"production"'
-            })            
+            })
         ].concat(isDevBuild ? [
             // Add module names to factory functions so they appear in browser profiler.
             new webpack.NamedModulesPlugin()
@@ -88,7 +90,7 @@ module.exports = (env) => {
             libraryTarget: 'commonjs2',
         },
         module: {
-            rules: [ { test: /\.css(\?|$)/, use: isDevBuild ? 'css-loader' : 'css-loader?minimize' } ]
+            rules: [{ test: /\.css(\?|$)/, use: isDevBuild ? 'css-loader' : 'css-loader?minimize' }]
         },
         entry: { vendor: ['aspnet-prerendering', 'react-dom/server'] },
         plugins: [

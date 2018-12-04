@@ -26,8 +26,8 @@ export function isObjectEmpty(obj): boolean {
     return true;
 }
 
-export function emptyForm(form: HTMLFormElement) : void {
-    var inputs = form.querySelectorAll("input, select, textarea");
+export function emptyForm(form: HTMLFormElement): void {
+    var inputs = Array.from(form.querySelectorAll("input, select, textarea"));
     inputs.forEach(x => {
         var inputType = x.getAttribute("type");
         if (inputType === "checkbox" || inputType === "radio") {
