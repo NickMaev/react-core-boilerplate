@@ -29,6 +29,7 @@ namespace ReactCoreBoilerplate.Services
             if (!string.IsNullOrEmpty(term))
             {
                 term = term.ToLower();
+                term = term.Trim();
 
                 var result = 
                     PeopleList
@@ -46,12 +47,25 @@ namespace ReactCoreBoilerplate.Services
 
         public virtual Result<int> Add(PersonModel model)
         {
-            if (model == null)
+            if(model == null)
                 return Error<int>();
-            if (string.IsNullOrEmpty(model.FirstName))
+            if(string.IsNullOrEmpty(model.FirstName))
                 return Error<int>("First name not defined.");
-            if (string.IsNullOrEmpty(model.LastName))
+            if(string.IsNullOrEmpty(model.LastName))
                 return Error<int>("Last name not defined.");
+
+            TrimStrings(model);
+
+            var personExists =
+                PeopleList
+                .Any(x =>
+                    x.FirstName == model.FirstName &&
+                    x.LastName == model.LastName
+                    );
+            if(personExists)
+            {
+                return Error<int>("Person with the same first name and last name already exists.");
+            }
 
             var newId = PeopleList.Max(x => x?.Id ?? 0) + 1;
             model.Id = newId;
@@ -60,7 +74,7 @@ namespace ReactCoreBoilerplate.Services
 
             return Ok(model.Id);
         }
-
+        
         public virtual Result Update(PersonModel model)
         {
             if (model == null)
@@ -70,6 +84,20 @@ namespace ReactCoreBoilerplate.Services
             var person = PeopleList.Where(x => x.Id == model.Id).FirstOrDefault();
             if (person == null)
                 return Error($"Person with id = {model.Id} not found.");
+
+            TrimStrings(model);
+
+            var personExists =
+                PeopleList
+                .Any(x =>
+                    x.Id != model.Id &&
+                    x.FirstName == model.FirstName &&
+                    x.LastName == model.LastName
+                    );
+            if(personExists)
+            {
+                return Error("Person with the same first name and last name already exists.");
+            }
 
             person.FirstName = model.FirstName;
             person.LastName = model.LastName;
@@ -84,6 +112,12 @@ namespace ReactCoreBoilerplate.Services
                 return Error($"Can't find person with Id = {id}.");
             PeopleList.Remove(unit);
             return Ok();
+        }
+        
+        private static void TrimStrings(PersonModel model)
+        {
+            model.FirstName = model.FirstName.Trim();
+            model.LastName = model.LastName.Trim();
         }
     }
 }

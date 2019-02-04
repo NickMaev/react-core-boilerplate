@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import { NavLink, Redirect } from "react-router-dom";
 import Globals from "@Globals";
 import AccountService from "@Services/AccountService";
-import { Dropdown } from "bootstrap3-native";
+import { Dropdown, Collapse } from "bootstrap3-native";
 import bind from 'bind-decorator';
 
 class TopMenu extends React.Component<{}, { logoutAction: boolean }> {
@@ -22,9 +22,11 @@ class TopMenu extends React.Component<{}, { logoutAction: boolean }> {
     }
 
     private elDropdown: HTMLAnchorElement;
+    private elCollapseButton: HTMLButtonElement;
 
     componentDidMount() {
         var dropdown = new Dropdown(this.elDropdown);
+        var collapse = new Collapse(this.elCollapseButton);
     }
 
     componentDidUpdate() {
@@ -37,7 +39,7 @@ class TopMenu extends React.Component<{}, { logoutAction: boolean }> {
         return <div className="navbar navbar-default">
             <div className="container-fluid">
                 <div className="navbar-header">
-                    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <button ref={x => this.elCollapseButton = x} type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span className="sr-only">Toggle navigation</span>
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>

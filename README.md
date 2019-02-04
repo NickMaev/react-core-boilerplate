@@ -9,6 +9,10 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 # Changes
+##### v. 1.5.4 (2019-02-04)
+* Added some minor features.
+* Bug fixes: `collapsing of the Bootstrap navigation bar`, `fixed controller and frontend's service in person update case`.
+* Updated dependencies.
 ##### v. 1.5.3 (2018-12-04)
 * Added polyfills for supporting IE9, IE11: `@babel/polyfill`, `custom-event-polyfill`.
 * Updated dependencies.

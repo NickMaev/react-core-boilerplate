@@ -1,9 +1,10 @@
 ﻿import { clone } from "@Utils";
 import { Action, Reducer } from "redux";
-import { AppThunkAction } from "./index";
+import { AppThunkAction, AppThunkActionAsync } from "./index";
 import PersonService from "@Services/PersonService";
 import { IPersonModel } from "@Models/IPersonModel";
 import { wait } from "domain-wait";
+import Result from "@Models/Result";
 
 export module PersonStore {
 
@@ -15,6 +16,7 @@ export module PersonStore {
     }
 
     export enum Actions {
+        FailureResponse = "PERSON_FAILURE_RESPONSE",
         SearchRequest = "PERSON_SEARCH_REQUEST",
         SearchResponse = "PERSON_SEARCH_RESPONSE",
         AddRequest = "PERSON_ADD_REQUEST",
@@ -23,6 +25,10 @@ export module PersonStore {
         UpdateResponse = "PERSON_UPDATE_RESPONSE",
         DeleteRequest = "PERSON_DELETE_REQUEST",
         DeleteResponse = "PERSON_DELETE_RESPONSE"
+    }
+
+    interface IFailureResponse {
+        type: Actions.FailureResponse;
     }
 
     interface IGetAllRequest {
@@ -62,6 +68,7 @@ export module PersonStore {
     }
 
     type KnownAction =
+        IFailureResponse |
         IGetAllRequest | IGetAllResponse |
         IAddRequest | IAddResponse |
         IUpdateRequest | IUpdateResponse |
@@ -76,37 +83,53 @@ export module PersonStore {
                 dispatch({ type: Actions.SearchRequest });
 
                 var result = await PersonService.search(term);
+
                 if (!result.hasErrors) {
                     dispatch({ type: Actions.SearchResponse, payload: result.value });
+                } else {
+                    dispatch({ type: Actions.FailureResponse });
                 }
             });
         },
-        addRequest: (model: IPersonModel): AppThunkAction<KnownAction> => async (dispatch, getState) => {
+        addRequest: (model: IPersonModel): AppThunkActionAsync<KnownAction, Result<number>> => async (dispatch, getState) => {
 
             dispatch({ type: Actions.AddRequest });
 
             var result = await PersonService.add(model);
+
             if (!result.hasErrors) {
                 model.id = result.value;
                 dispatch({ type: Actions.AddResponse, payload: model });
+            } else {
+                dispatch({ type: Actions.FailureResponse });
             }
+
+            return result;
         },
-        updateRequest: (model: IPersonModel): AppThunkAction<KnownAction> => async (dispatch, getState) => {
+        updateRequest: (model: IPersonModel): AppThunkActionAsync<KnownAction, Result<{}>> => async (dispatch, getState) => {
 
             dispatch({ type: Actions.UpdateRequest });
 
             var result = await PersonService.update(model);
+
             if (!result.hasErrors) {
                 dispatch({ type: Actions.UpdateResponse, payload: model });
+            } else {
+                dispatch({ type: Actions.FailureResponse });
             }
+
+            return result;
         },
         deleteRequest: (id: number): AppThunkAction<KnownAction> => async (dispatch, getState) => {
 
             dispatch({ type: Actions.DeleteRequest });
 
             var result = await PersonService.delete(id);
+
             if (!result.hasErrors) {
                 dispatch({ type: Actions.DeleteResponse, id });
+            } else {
+                dispatch({ type: Actions.FailureResponse });
             }
         }
     }
@@ -124,6 +147,10 @@ export module PersonStore {
         var cloneIndicators = () => clone(currentState.indicators);
 
         switch (action.type) {
+            case Actions.FailureResponse:
+                var indicators = cloneIndicators();
+                indicators.operationLoading = false;
+                return { ...currentState, indicators };
             case Actions.SearchRequest:
                 var indicators = cloneIndicators();
                 indicators.operationLoading = true;

@@ -15,7 +15,7 @@ export default class PersonService extends ServiceBase {
     }
     public static async update(model: IPersonModel): Promise<Result<{}>> {
         var result = await this.requestJson({
-            url: "/api/Person",
+            url: `/api/Person/${model.id}`,
             method: "PATCH",
             data: model
         });

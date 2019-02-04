@@ -30,7 +30,7 @@ namespace ReactCoreBoilerplate.Controllers
             return Json(result);
         }
 
-        [HttpPatch("[action]")]
+        [HttpPatch("{id:int}")]
         public IActionResult Update(PersonModel model)
         {
             if (model == null)

@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { RouteComponentProps, withRouter } from "react-router";
 import { IPersonModel } from "@Models/IPersonModel";
 import { PersonStore } from "@Store/PersonStore";
-import { ApplicationState } from "@Store/index";
+import { ApplicationState, reducers } from "@Store/index";
 import { connect } from "react-redux";
 import { PagingBar } from "@Components/shared/PagingBar";
 import PersonEditor from "@Components/person/PersonEditor";
@@ -12,6 +12,7 @@ import Loader from "@Components/shared/Loader";
 import bind from 'bind-decorator';
 import { ModalComponent } from "@Components/shared/ModalComponent";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
+import { getPromiseFromAction } from "@Utils";
 
 type Props = RouteComponentProps<{}> & typeof PersonStore.actionCreators & PersonStore.IState;
 
@@ -93,24 +94,41 @@ class ExamplePage extends React.Component<Props, IState> {
     }
 
     @bind
-    onClickPersonEditorAdd__saveBtn(e: React.MouseEvent<HTMLButtonElement>): void {
+    async onClickPersonEditorAdd__saveBtn(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
+
         if (!this.personEditorAdd.elForm.isValid()) {
+            // Form is not valid.
             return;
         }
-        this.props.addRequest(this.personEditorAdd.elForm.getData());
-        this.pagingBar.setLastPage();
-        this.elModalAdd.hide();
+
+        var result =
+            await getPromiseFromAction(
+                this.props.addRequest(this.personEditorAdd.elForm.getData())
+            );
+
+        if (!result.hasErrors) {
+            this.pagingBar.setLastPage();
+            this.elModalAdd.hide();
+        }
     }
 
     @bind
-    onClickPersonEditorEdit__saveBtn(e: React.MouseEvent<HTMLButtonElement>): void {
+    async onClickPersonEditorEdit__saveBtn(e: React.MouseEvent<HTMLButtonElement>) {
         if (!this.personEditorEdit.elForm.isValid()) {
+            // Form is not valid.
             return;
         }
+
         var data = this.personEditorEdit.elForm.getData();
-        this.props.updateRequest(data);
-        this.elModalEdit.hide();
+
+        var result = await getPromiseFromAction(
+            this.props.updateRequest(data)
+        );
+
+        if (!result.hasErrors) {
+            this.elModalEdit.hide();
+        }
     }
 
     @bind
