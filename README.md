@@ -9,6 +9,15 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 # Changes
+##### v. 1.6.0 (2019-03-13)
+* Updated .NET Core dependency to `v. 2.2`.
+* Updated critical npm packages.
+* Updated WebPack dependencies.
+* Improved WebPack vendor and bundle configurations.
+* Improved `.csproj` file for building and publishing scenarios.
+* Fixed source map generation in debug mode.
+* Fixed bundle compilation in production mode.
+* Other stability fixes.
 ##### v. 1.5.4 (2019-02-04)
 * Added some minor features.
 * Bug fixes: `collapsing of the Bootstrap navigation bar`, `fixed controller and frontend's service in person update case`.
@@ -60,7 +69,9 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 3. At the first run you must close project if it runs in Visual Studio or another IDE. 
 Open project's folder in console and run command `npm install`.
 4. Type `npm run build:dev` for development, it will compile the main and vendor bundle.
-5. Run project.
+5. If you are using Visual Studio 20xx, instead of `IIS Express` select the `YourProjectName` or `ReactCoreBoilerplate`: 
+click on the down arrow near the `IIS Express` and choose the right option.
+6. Build and run project. It will start in Windows Console.
 
 ## Modify WebPack vendor config
 If you modify the WebPack vendor config, you must manually recompile the vendor bundle.

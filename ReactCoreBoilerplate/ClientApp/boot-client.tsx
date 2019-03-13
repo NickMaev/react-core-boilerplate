@@ -18,18 +18,28 @@ import Globals from "@Globals";
 import { isNode } from '@Utils';
 import { IPublicSession } from "@Models/IPublicSession";
 import { IPrivateSession } from "@Models/IPrivateSession";
+import { NSerializeJson } from "nserializejson";
 
-if (!isNode()) {
-    Globals.reset();
-    Globals.init({ public: window["publicSession"] as IPublicSession, private: {} as IPrivateSession });
-}
+function setupSession() {
+    if (!isNode()) {
+        Globals.reset();
+        Globals.init({ public: window["publicSession"] as IPublicSession, private: {} as IPrivateSession });
+    }
+};
 
-document.addEventListener('DOMContentLoaded', () => {
-    var preloader = document.getElementById("preloader");
-    preloader.classList.add("hidden");
-});
+function setupGlobalPlugins() {
+    // Use dot notation in the name attributes of the form inputs.
+    NSerializeJson.options.useDotSeparatorInPath = true;
+};
 
-// Create browser history to use in the Redux store
+function setupEvents() {
+    document.addEventListener('DOMContentLoaded', () => {
+        var preloader = document.getElementById("preloader");
+        preloader.classList.add("hidden");
+    });
+};
+
+// Create browser history to use in the Redux store.
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href')!;
 const history = createBrowserHistory({ basename: baseUrl });
 
@@ -50,9 +60,15 @@ function renderApp() {
     );
 }
 
+setupSession();
+
+setupGlobalPlugins();
+
+setupEvents();
+
 renderApp();
 
-// Allow Hot Module Replacement
+// Allow Hot Module Replacement.
 if (module.hot) {
     module.hot.accept('./routes', () => {
         routes = require<typeof RoutesModule>('./routes').routes;

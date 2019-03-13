@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Serilog.Sinks.AzureApp" Version="2.1.2" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
@@ -20,82 +20,44 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
-    <Compile Remove="ClientApp\domain-task\**" />
-    <Compile Remove="ClientApp\helpers\**" />
+    <Compile Remove="obj\bin\**" />
+    <Content Remove="obj\bin\**" />
+    <Content Remove="wwwroot\**" />
     <Content Remove="ClientApp\**" />
-    <Content Remove="ClientApp\domain-task\**" />
-    <EmbeddedResource Remove="ClientApp\domain-task\**" />
-    <EmbeddedResource Remove="ClientApp\helpers\**" />
-    <None Remove="ClientApp\domain-task\**" />
-    <None Remove="ClientApp\helpers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\components\person\PersonEditor.tsx" />
-    <None Remove="ClientApp\components\shared\AppComponent.tsx" />
-    <None Remove="ClientApp\layouts\guestLayout.tsx" />
-    <None Remove="ClientApp\models\ILoginModel.ts" />
-    <None Remove="ClientApp\models\IPersonModel.ts" />
-    <None Remove="ClientApp\models\IServiceUser.ts" />
-    <None Remove="ClientApp\models\Result.ts" />
-    <None Remove="ClientApp\pages\ExamplePage.tsx" />
-    <None Remove="ClientApp\pages\HomePage.tsx" />
-    <None Remove="ClientApp\pages\loginPage.tsx" />
-    <None Remove="ClientApp\services\AccountService.ts" />
-    <None Remove="ClientApp\components\shared\ErrorBoundary.tsx" />
-    <None Remove="ClientApp\components\shared\PagingBar.tsx" />
-    <None Remove="ClientApp\components\shared\topMenu.tsx" />
-    <None Remove="ClientApp\pages\layoutPage.tsx" />
-    <None Remove="ClientApp\store\loginStore.ts" />
-    <None Remove="ClientApp\store\PersonStore.ts" />
-    <None Remove="ClientApp\styles\authorizedLayout.scss" />
-    <None Remove="ClientApp\styles\guestLayout.scss" />
-    <None Remove="ClientApp\styles\main.scss" />
+    <None Include="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ClientApp\components\person\PersonEditor.tsx" />
-    <Content Include="ClientApp\models\IPersonModel.ts" />
-    <Content Include="ClientApp\models\Result.ts" />
-    <Content Include="ClientApp\components\shared\AppRoute.tsx" />
-    <Content Include="ClientApp\layouts\GuestLayout.tsx" />
-    <Content Include="ClientApp\pages\HomePage.tsx" />
-    <Content Include="ClientApp\pages\LoginPage.tsx" />
-    <Content Include="ClientApp\components\shared\ErrorBoundary.tsx" />
-    <Content Include="ClientApp\components\shared\PagingBar.tsx" />
-    <Content Include="ClientApp\components\shared\TopMenu.tsx" />
-    <Content Include="ClientApp\layouts\AuthorizedLayout.tsx" />
-    <Content Include="ClientApp\pages\ExamplePage.tsx" />
-    <Content Include="ClientApp\styles\guestLayout.scss" />
-    <Content Include="ClientApp\styles\authorizedLayout.scss" />
-    <Content Include="ClientApp\styles\main.scss" />
+    <EmbeddedResource Remove="obj\bin\**" />
+    <None Remove="obj\bin\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\components\shared\AppComponent.tsx" />
-    <TypeScriptCompile Include="ClientApp\Globals.ts" />
-    <TypeScriptCompile Include="ClientApp\models\ILoginModel.ts" />
-    <TypeScriptCompile Include="ClientApp\models\IServiceUser.ts" />
-    <TypeScriptCompile Include="ClientApp\services\AccountService.ts" />
-    <TypeScriptCompile Include="ClientApp\store\PersonStore.ts" />
-    <TypeScriptCompile Include="ClientApp\store\LoginStore.ts" />
-  </ItemGroup>
-
-  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
-    <!-- Ensure Node.js is installed -->
+  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And (!Exists('wwwroot\dist') OR Exists('wwwroot\dist\production_build')) ">
+    
+	<Exec Command="RD /S /Q wwwroot\dist" />
+	<Exec Command="RD /S /Q ClientApp\dist" />
+	
+	<!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
     </Exec>
     <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
 
-    <!-- In development, the dist files won't exist on the first run or when cloning to
-         a different machine, so rebuild them if not already present. -->
-    <Message Importance="high" Text="Performing first-run Webpack build..." />
+    <Message Importance="high" Text="Performing Webpack build..." />
     <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
     <Exec Command="node node_modules/webpack/bin/webpack.js" />
   </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+	<Exec Command="RD /S /Q wwwroot\dist" />
+	<Exec Command="RD /S /Q ClientApp\dist" />
+	<Exec Condition="!Exists('wwwroot')" Command="mkdir wwwroot" />
+	<Exec Condition="!Exists('wwwroot\dist')" Command="mkdir wwwroot\dist" />
+	<Exec Command="type nul &gt; wwwroot\dist\production_build" />
+	
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec Command="npm install" />
     <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
@@ -103,7 +65,7 @@
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
-      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" Exclude="wwwroot\dist\production_build" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

@@ -1,15 +1,41 @@
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssNanoPlugin = require("cssnano");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
+    
+    var mode = isDevBuild ? "development" : "production";
+
+    console.log('\x1b[36m%s\x1b[0m', "=== Webpack vendor compilation mode: " + mode + " ===");
 
     const sharedConfig = {
-        mode: isDevBuild ? "development" : "production",
+        mode,
         optimization: {
-            minimize: !isDevBuild
+            minimize: !isDevBuild,
+            usedExports: isDevBuild,
+            minimizer: !isDevBuild ? [
+                // Production.
+                new TerserWebpackPlugin({
+                    terserOptions: {
+                        output: {
+                            comments: false,
+                        },
+                    },
+                }),
+                new OptimizeCSSAssetsPlugin({
+                    cssProcessor: CssNanoPlugin,
+                    cssProcessorPluginOptions: {
+                        preset: ["default", { discardComments: { removeAll: true } }]
+                    }
+                })
+            ] : [
+                // Development.
+            ]
         },
         stats: { modules: false },
         resolve: { extensions: ['.js'] },
@@ -20,6 +46,7 @@ module.exports = (env) => {
         },
         entry: {
             vendor: [
+                'formik',
                 'json-to-url',
                 'domain-wait',
                 'react-paginating',
@@ -35,6 +62,7 @@ module.exports = (env) => {
                 'bootstrap-css-only/css/bootstrap.css',
                 'history',
                 'connected-react-router',
+                'react-router-dom',
                 'react-router',
                 'react-helmet',
                 'react',
@@ -60,14 +88,21 @@ module.exports = (env) => {
         ].concat(isDevBuild ? [
             // Add module names to factory functions so they appear in browser profiler.
             new webpack.NamedModulesPlugin()
-        ] : [])
+            ] : []),
+        devtool: isDevBuild ? 'eval-source-map' : false,
+        // If you have trouble with the vendor bundle in production mode 
+        // you need to uncomment the line below and comment the line above.
+        // Thus you will get an opportunity to have a full info about module 
+        // in which the error occurs.
+        //devtool: 'eval-source-map',
     };
 
+    const clientBundleOutputDir = path.join(__dirname, 'wwwroot', 'dist');
     const clientBundleConfig = merge(sharedConfig, {
-        output: { path: path.join(__dirname, 'wwwroot', 'dist') },
+        output: { path: clientBundleOutputDir },
         module: {
             rules: [
-                { test: /\.css(\?|$)/, use: [MiniCssExtractPlugin.loader].concat(isDevBuild ? 'css-loader' : 'css-loader?minimize') }
+                { test: /\.css(\?|$)/, use: [MiniCssExtractPlugin.loader, 'css-loader'] }
             ]
         },
         plugins: [
@@ -75,10 +110,17 @@ module.exports = (env) => {
                 filename: "vendor.css"
             }),
             new webpack.DllPlugin({
-                path: path.join(__dirname, 'wwwroot', 'dist', '[name]-manifest.json'),
+                path: path.join(clientBundleOutputDir, '[name]-manifest.json'),
                 name: '[name]_[hash]'
             })
-        ].concat(isDevBuild ? [] : [
+        ].concat(isDevBuild ? [
+            // Development.
+            new webpack.SourceMapDevToolPlugin({
+                filename: '[file].map', // Remove this line if you prefer inline source maps.
+                moduleFilenameTemplate: path.relative(clientBundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
+            }),
+        ] : [
+            // Production.
         ])
     });
 
@@ -90,7 +132,7 @@ module.exports = (env) => {
             libraryTarget: 'commonjs2',
         },
         module: {
-            rules: [{ test: /\.css(\?|$)/, use: isDevBuild ? 'css-loader' : 'css-loader?minimize' }]
+            rules: [{ test: /\.css(\?|$)/, use: 'css-loader' }]
         },
         entry: { vendor: ['aspnet-prerendering', 'react-dom/server'] },
         plugins: [

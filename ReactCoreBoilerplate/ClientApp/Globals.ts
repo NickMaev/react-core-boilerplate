@@ -9,48 +9,57 @@ export default class Globals {
 
     private static isInitialized: boolean = false;
 
-    private static data: INodeSession = {};
+    private static session: INodeSession = {};
 
     public static reset(): void {
         this.isInitialized = false;
-        this.data = {};
+        this.session = {};
     }
 
-    public static init(data: INodeSession): void {
+    public static init(session: INodeSession): void {
         if (this.isInitialized) {
             throw Error("Globals is already initialized.");
         }
-        this.data = (data || {
+
+        this.session = (session || {
             public: {}, private: {}
         }) as INodeSession;
-        this.isInitialized = true;
 
-        // Use dot notation in name of the form inputs.
-        NSerializeJson.options.useDotSeparatorInPath = true;
+        this.isInitialized = true;
     }
 
     private static throwIfNotInitialized() {
-        if (!this.isInitialized)
-            throw Error("Globals is not initialized. You have to call Session.init before.");
+        if (!this.isInitialized) {
+            throw Error("'Globals' is not initialized. You have to call 'Globals.init' before.");
+        }
     }
 
-    public static getData(): INodeSession {
+    public static getSession(): INodeSession {
         this.throwIfNotInitialized();
-        return this.data;
+        return this.session;
     }
 
-    public static setData(data: INodeSession) {
+    public static setSession(session: INodeSession) {
         this.throwIfNotInitialized();
-        var oldData = this.data;
-        this.data = { ...oldData, ...data };
+        // Update session object by the new data.
+        this.session = { ...this.session, ...session };
     }
 
     public static get serviceUser(): IServiceUser {
-        return this.getData().public.serviceUser;
+        let currentSession = this.getSession();
+        if (currentSession) {
+            let publicSession = currentSession.public;
+            if (publicSession) {
+                return publicSession.serviceUser;
+            } else {
+                throw Error("Globals: public session was not initialized.")
+            }
+        }
+        throw Error("Globals: current session was not initialized.")
     }
 
     public static set serviceUser(serviceUser: IServiceUser) {
-        this.setData({ public: { serviceUser } });
+        this.setSession({ public: { serviceUser } });
     }
 
     public static get isAuthenticated(): boolean {

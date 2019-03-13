@@ -32,7 +32,7 @@ export abstract class ServiceBase {
         var axiosResult = null;
         var result = null;
 
-        opts.url = transformUrl(opts.url); // Allow requests also for Node.
+        opts.url = transformUrl(opts.url); // Allow requests also for the Node.
 
         var processQuery = (url: string, data: any): string => {
             if (data) {
@@ -44,10 +44,10 @@ export abstract class ServiceBase {
         var axiosRequestConfig : AxiosRequestConfig;
 
         if (isNode()) {
-            // Used for SSR requests from the web server to NodeServices.
+            // Make SSR requests 'authorized' from the NodeServices to the web server.
             axiosRequestConfig = {
                 headers: {
-                    Cookie: Globals.getData().private.cookie
+                    Cookie: Globals.getSession().private.cookie
                 }
             }
         }

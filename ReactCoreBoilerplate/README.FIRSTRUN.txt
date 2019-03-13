@@ -1,5 +1,4 @@
 The project contains a fake authorization system, so you can change it to Identity or another.
-More info: https://github.com/NickMaev/react-core-boilerplate
 
 # Installation
 	0. Install of the latest stable Node.js: https://nodejs.org/en/
@@ -16,11 +15,12 @@ More info: https://github.com/NickMaev/react-core-boilerplate
 	* HTTP Error 500
 	Probably you don't have the latest version of Node.js.
 	* HTTP Error 502.5
-	You must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" 
-	using this link: https://www.microsoft.com/net/download/dotnet-core/2.1
+	You must install the latest ".NET Core SDK" and ".NET Core Runtime" 
+	using this link: https://dotnet.microsoft.com/download
 	* HTTP error 500 when hosted in Azure
 	Set the "WEBSITE_NODE_DEFAULT_VERSION" to 6.11.2 in the "app settings" in Azure.
 
 
 # Other issues
-	If you will have any issue with project starting, you can see errors in logs ("/logs" directory).
+	If you will have any issue with project starting, you can see errors in logs ("/logs" directory). 
+	Also feel free to use the issue tracker: https://github.com/NickMaev/react-core-boilerplate/issues

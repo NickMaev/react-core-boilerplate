@@ -5,6 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const CssNanoPlugin = require("cssnano");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
@@ -12,10 +15,33 @@ module.exports = (env) => {
     // Configuration in common to both client-side and server-side bundles.
     const sharedConfig = () => {
 
+        var mode = isDevBuild ? "development" : "production";
+
+        console.log('\x1b[36m%s\x1b[0m', "=== Webpack compilation mode: " + mode + " ===");
+
         var config = {
-            mode: isDevBuild ? "development" : "production",
+            mode,
             optimization: {
-                minimize: !isDevBuild
+                minimize: !isDevBuild,
+                usedExports: isDevBuild,
+                minimizer: !isDevBuild ? [
+                    // Production.
+                    new TerserWebpackPlugin({
+                        terserOptions: {
+                            output: {
+                                comments: false,
+                            },
+                        },
+                    }),
+                    new OptimizeCSSAssetsPlugin({
+                        cssProcessor: CssNanoPlugin,
+                        cssProcessorPluginOptions: {
+                            preset: ["default", { discardComments: { removeAll: true } }]
+                        }
+                    })
+                ] : [
+                        // Development.
+                    ]
             },
             stats: { modules: false },
             resolve: {
@@ -61,7 +87,7 @@ module.exports = (env) => {
                     {
                         test: /\.(gif|png|jpe?g|svg)$/i,
                         use: [
-                            'file-loader',
+                            'url-loader',
                             {
                                 loader: 'image-webpack-loader'
                             }
@@ -78,6 +104,8 @@ module.exports = (env) => {
                 // You can remove this if you don't use Moment.js:
                 new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
             ].concat(isDevBuild ? [
+                // Development.
+
                 // Add module names to factory functions so they appear in browser profiler.
                 new webpack.NamedModulesPlugin(),
                 // Watcher doesn't work well if you mistype casing in a path so we use
@@ -89,7 +117,9 @@ module.exports = (env) => {
                 // makes the discovery automatic so you don't have to restart.
                 // See https://github.com/facebookincubator/create-react-app/issues/186
                 new WatchMissingNodeModulesPlugin(path.resolve(__dirname, '..', 'node_modules'))
-            ] : [])
+            ] : [
+                // Production.
+            ])
         };
 
         if (isDevBuild) {
@@ -100,7 +130,8 @@ module.exports = (env) => {
                 // cumbersome.
                 performance: {
                     hints: false,
-                }
+                },
+                devtool: 'eval-source-map'
             };
         }
 
@@ -113,8 +144,8 @@ module.exports = (env) => {
         entry: { 'main-client': './ClientApp/boot-client.tsx' },
         module: {
             rules: [
-                { test: /\.css$/, use: isDevBuild ? ['style-loader', 'css-loader'] : [MiniCssExtractPlugin.loader, 'css-loader?minimize'] },
-                { test: /\.(scss|sass)$/, use: isDevBuild ? ['style-loader', 'css-loader', 'sass-loader'] : [MiniCssExtractPlugin.loader, 'css-loader?minimize', 'sass-loader'] }
+                { test: /\.css$/, use: isDevBuild ? ['style-loader', 'css-loader'] : [MiniCssExtractPlugin.loader, 'css-loader'] },
+                { test: /\.(scss|sass)$/, use: isDevBuild ? ['style-loader', 'css-loader', 'sass-loader'] : [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] }
             ]
         },
         output: { path: path.join(__dirname, clientBundleOutputDir) },
@@ -128,22 +159,22 @@ module.exports = (env) => {
             child_process: 'empty',
         },
         plugins: [
-            //new ExtractTextPlugin('site.css'),
             new webpack.DllReferencePlugin({
                 context: __dirname,
                 manifest: require('./wwwroot/dist/vendor-manifest.json')
             })
         ].concat(isDevBuild ? [
+            // Development.
             new webpack.SourceMapDevToolPlugin({
                 filename: '[file].map', // Remove this line if you prefer inline source maps.
                 moduleFilenameTemplate: path.relative(clientBundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
             })
         ] : [
-                // Plugins that apply in production builds only
-                new MiniCssExtractPlugin({
-                    filename: "site.css"
-                })
-            ])
+            // Production.
+            new MiniCssExtractPlugin({
+                filename: "site.css"
+            })
+        ])
     });
 
     // Configuration for server-side (prerendering) bundle suitable for running in Node.
@@ -167,8 +198,7 @@ module.exports = (env) => {
             libraryTarget: 'commonjs',
             path: path.join(__dirname, './ClientApp/dist')
         },
-        target: 'node',
-        devtool: 'inline-source-map'
+        target: 'node'
     });
 
     return [clientBundleConfig, serverBundleConfig];
