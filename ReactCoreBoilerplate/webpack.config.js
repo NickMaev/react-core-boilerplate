@@ -123,6 +123,9 @@ module.exports = (env) => {
         };
 
         if (isDevBuild) {
+
+            // Change config for development build.
+
             config = {
                 ...config,
                 // Turn off performance hints during development because we don't do any
@@ -132,6 +135,11 @@ module.exports = (env) => {
                     hints: false,
                 },
                 devtool: 'eval-source-map'
+            };
+
+            config.resolve.alias = {
+                ...config.resolve.alias,
+                'react-dom': '@hot-loader/react-dom'
             };
         }
 

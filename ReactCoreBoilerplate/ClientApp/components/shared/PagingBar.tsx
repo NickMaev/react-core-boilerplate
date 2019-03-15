@@ -1,4 +1,4 @@
-import Pagination, { PaginationProps } from "react-paginating";
+import Pagination from "react-paginating";
 import * as React from "react";
 import bind from 'bind-decorator';
 

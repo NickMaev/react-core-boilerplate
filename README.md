@@ -9,13 +9,18 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 # Changes
+##### v. 1.6.2 (2019-03-15)
+* Installed stable `Terser` plugin.
+* Updated `React` and other packages for it (incl. types).
+* Updated `WebPack`.
+* Updated WebPack config for development mode.
 ##### v. 1.6.0 (2019-03-13)
-* Updated .NET Core dependency to `v. 2.2`.
-* Updated critical npm packages.
-* Updated WebPack dependencies.
-* Improved WebPack vendor and bundle configurations.
+* Updated `.NET Core` dependency to `v. 2.2`.
+* Updated critical NPM packages.
+* Updated `WebPack` dependencies.
+* Improved `WebPack` vendor and bundle configurations.
 * Improved `.csproj` file for building and publishing scenarios.
-* Fixed source map generation in debug mode.
+* Fixed source map generation in development mode.
 * Fixed bundle compilation in production mode.
 * Other stability fixes.
 ##### v. 1.5.4 (2019-02-04)
@@ -27,7 +32,7 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 * Updated dependencies.
 ##### v. 1.5.2 (2018-12-01)
 * Added fulltext live search to example.
-* Added Webpack plugins: `case-sensitive-paths-webpack-plugin`, `react-dev-utils`
+* Added WebPack plugins: `case-sensitive-paths-webpack-plugin`, `react-dev-utils`
 * Added plugins with examples:
 `awesome-debounce-promise` to prevent doing frequent queries in live search, `formik` to create forms in React without tears.
 * Fixed some functional and text errors.
