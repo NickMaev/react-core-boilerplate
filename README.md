@@ -9,6 +9,8 @@ Project template available on [Visual Studio Marketplace](https://marketplace.vi
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 # Changes
+##### v. 1.6.3 (2019-03-19)
+* Removed `image-webpack-loader` due to instability.
 ##### v. 1.6.2 (2019-03-15)
 * Installed stable `Terser` plugin.
 * Updated `React` and other packages for it (incl. types).

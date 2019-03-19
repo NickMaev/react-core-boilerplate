@@ -86,12 +86,7 @@ module.exports = (env) => {
                     },
                     {
                         test: /\.(gif|png|jpe?g|svg)$/i,
-                        use: [
-                            'url-loader',
-                            {
-                                loader: 'image-webpack-loader'
-                            }
-                        ]
+                        use: ['url-loader']
                     }
                 ]
             },
