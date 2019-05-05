@@ -1,0 +1,50 @@
+﻿
+
+.footer {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border-top: 1px solid #e7e7e7;
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.layout{
+    height:100%;
+}
+
+ul.pagination{
+    &> li > span {
+        cursor: pointer;
+    }
+}
+
+.tippy-content {
+    font-size: 14px;
+}
+
+label {
+    margin: 5px !important;
+
+    &.required {
+        &:after {
+            content: '*';
+            color: red;
+            padding-left: 4px;
+            font-size: 18px;
+            position: absolute;
+        }
+    }
+}
+
+.navbar-default .navbar-nav > li > a.active { 
+    &,
+    &:hover, 
+    &:focus {
+        color: #555;
+        background-color: #e7e7e7;
+    }    
+}

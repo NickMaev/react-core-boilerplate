@@ -1,14 +1,18 @@
-# Description
-React Core Boilerplate is a starting point for building universal/isomorphic React applications with ASP.NET Core 2.
-It bases on the TypeScript and other libraries for creating powerfull web applications.
-All works fine out of the box. Also is helpful for newbies.
-The project contains a fake authorization system, so you can change it to Identity or another.
-Project template available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
+﻿# Description
+**React Core Boilerplate** is a starting point for building universal/isomorphic React web applications with ASP.NET Core 2 and server-side rendering. All works fine out of the box. It also is helpful for newbies.
+The project contains a fake authorization system. So you can change it to Identity or the other.  
+[TypeScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.TypeScript) and [JavaScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.JavaScript) versions are available.⚡️  
+Visual Studio templates are available in [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
 # Screenshots
 ![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
 ![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
 ![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 # Changes
+##### v. 1.7.0 (2019-05-05)
+* Repository restructurization.
+* Added **JavaScript** version of the React Core Boilerplate. 🎉
+* Stability fixes.
+* Updated critical dependencies.
 ##### v. 1.6.3 (2019-03-19)
 * Removed `image-webpack-loader` due to instability.
 ##### v. 1.6.2 (2019-03-15)
@@ -121,9 +125,10 @@ You must install the latest "ASP.NET Core SDK" and "Runtime and Hosting Bundle" 
 
 Set the "WEBSITE_NODE_DEFAULT_VERSION" to 6.11.2 in the "app settings" in Azure.
 ## Other issues
-* If you will have any issue with project starting, you can see errors in logs ("/logs" directory). Please, do this before the open an issue on GitHub.
+* If you will have any issue with project starting, you can see errors in logs ("/logs" directory). Please, do this before the open an issue on GitHub. Don't forget to mention the version of the React Core Boilerplate (`JavaScript` or `TypeScript`)
 
-# Project structure:
+# Project structure
+* **TypeScript** project:
 ```shell
 |   .gitignore
 |   AppSettings.cs
@@ -237,3 +242,6 @@ Set the "WEBSITE_NODE_DEFAULT_VERSION" to 6.11.2 in the "app settings" in Azure.
         favicon.ico
         
 ```
+
+# License
+MIT

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "ClientApp",
+    "target": "es5",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": { 
+      "@Ui":  [ "./Ui" ],
+      "@Components/*": [ "./components/*" ],
+      "@Images/*": [ "./images/*" ],
+      "@Store/*": [ "./store/*" ],
+      "@Utils": [ "./utils.ts" ],
+      "@Styles/*": [ "./styles/*" ],
+      "@Models/*": [ "./models/*" ],
+      "@Pages/*": [ "./pages/*" ],
+      "@Layouts/*":  [ "./layouts/*" ],
+      "@Services/*": ["./services/*"],
+      "@Interfaces": ["./interfaces"],
+      "@Globals": ["./Globals"]
+    }
+  },
+  "exclude": [
+      "bin",
+      "node_modules"
+  ]
+}
