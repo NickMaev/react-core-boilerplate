@@ -56,8 +56,6 @@ module.exports = (env) => {
                 'react-toastify',
                 'nserializejson',
                 'nval-tippy',
-                'nval',
-                'tippy.js',
                 'bootstrap3-native',
                 'bootstrap-css-only/css/bootstrap.css',
                 'history',
