@@ -1,80 +1,108 @@
-﻿import Loader from "@Components/shared/Loader";
-import * as LoginStore from "@Store/LoginStore";
-import "@Styles/main.scss";
-import * as React from "react";
-import { Helmet } from "react-helmet";
+﻿import * as LoginStore from "@Store/loginStore";
 import { connect } from "react-redux";
-import { Redirect, RouteComponentProps, withRouter } from "react-router";
-import bind from 'bind-decorator';
-import { Form } from "@Components/shared/Form";
+import React, { useRef } from "react";
+import { Helmet } from "react-helmet";
+import { Redirect, withRouter } from "react-router";
+import FormValidator from "@Components/shared/FormValidator";
+import Button from "react-bootstrap/Button";
+import { Formik, Field } from "formik";
+import { FormGroup } from "react-bootstrap";
+import SessionManager from "@Core/session";
 
-class LoginPage extends React.Component {
+const LoginPage = (props) => {
 
-    constructor(props) {
-        super(props);
-    }
+    const formValidator = useRef(null);
 
-    elLoader;
-    elForm;
-
-    componentDidMount() {
-        
-        this.props.init();
-        
-        if (this.elLoader) {
-            this.elLoader.forceUpdate();
+    const onSubmit = async (data) => {
+        if (formValidator.current.isValid()) {
+            await props.login(data);
         }
+    };
+
+    if (SessionManager.isAuthenticated && props.isLoginSuccess) {
+        return <Redirect to="/" />;
     }
 
-    @bind
-    async onClickSubmitBtn(event) {
-        event.preventDefault();
-        if (this.elForm.isValid()) {
-            var data = this.elForm.getData();
-            this.props.loginRequest(data);
-        }
-    }
+    return <div id="loginPage">
 
-    render() {
+        <Helmet>
+            <title>Login page - RCB.JavaScript</title>
+        </Helmet>
 
-        if (this.props.indicators.loginSuccess) {
-            return <Redirect to="/"/>;
-        }
+        <div id="loginContainer">
 
-        return <div id="loginPage">
+            <p className="text-center">Type any login and password to enter.</p>
 
-            <Helmet>
-                <title>Login page - RCB (JavaScript)</title>
-            </Helmet>
-            
-            <Loader ref={x => this.elLoader = x} show={this.props.indicators.operationLoading} />
+            <Formik
+                enableReinitialize
+                initialValues={{}}
+                onSubmit={async (values, { setSubmitting }) => {
+                    await onSubmit(values);
+                }}
+            >
+                {({ values, handleSubmit }) => {
 
-            <div id="loginContainer">
+                    return <FormValidator ref={x => formValidator.current = x}>
 
-                <p className="text-center">Type any login and password to enter.</p>
+                        <FormGroup>
+                            <Field name="login">
+                                {({ field }) => (
+                                    <>
+                                        <label className="control-label" htmlFor="login">Login</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="login"
+                                            name={field.name}
+                                            data-val-required="true"
+                                            data-msg-required="Login is required."
+                                            value={field.value || ''}
+                                            onChange={field.onChange}
+                                        />
+                                    </>
+                                )}
+                            </Field>
+                        </FormGroup>
 
-                <Form ref={x => this.elForm = x}>
-                    <div className="form-group">
-                        <label htmlFor="inputLogin">Login</label>
-                        <input type="text" name="login" data-value-type="string" className="form-control" id="inputLogin" data-val-required="true" data-msg-required="Login is required." />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="inputLogin">Password</label>
-                        <input type="password" name="password" data-value-type="string" className="form-control" id="inputPassword" data-val-required="true" data-msg-required="Password is required." />
-                    </div>
-                    <div className="form-inline">
-                        <button className="btn btn-success" onClick={this.onClickSubmitBtn}>Sign in</button>
-                    </div>
-                </Form>
-            </div>
+                        <FormGroup>
+                            <Field name="password">
+                                {({ field }) => (
+                                    <>
+                                        <label htmlFor="password">Password</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            name={field.name}
+                                            data-val-required="true"
+                                            data-msg-required="Password is required."
+                                            value={field.value || ''}
+                                            onChange={field.onChange}
+                                        />
+                                    </>
+                                )}
+                            </Field>
+                        </FormGroup>
 
-        </div>;
-    }
+                        <div className="form-inline">
+                            <Button onClick={() => handleSubmit()}>Sign in</Button>
+                        </div>
+
+                    </FormValidator>
+                }}
+            </Formik>
+
+        </div>
+    </div>;
 }
 
-var component = connect(
-    state => state.login, // Selects which state properties are merged into the component's props
-    LoginStore.actionCreators // Selects which action creators are merged into the component's props
+// Connect component with Redux store.
+var connectedComponent = connect(
+    state => state.login, // Selects which state properties are merged into the component's props.
+    LoginStore.actionCreators, // Selects which action creators are merged into the component's props.
 )(LoginPage);
 
-export default (withRouter(component));
+// Attach the React Router to the component to have an opportunity
+// to interract with it: use some navigation components, 
+// have an access to React Router fields in the component's props, etc.
+export default withRouter(connectedComponent);

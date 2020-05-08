@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RCB.JavaScript", "RCB.JavaScript\RCB.JavaScript.csproj", "{82F5B223-FCD5-48FF-B03D-224D30876335}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RCB.TypeScript", "RCB.TypeScript\RCB.TypeScript.csproj", "{4C50845F-9A28-4D5D-A23C-01876AD2931D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCB.JavaScript", "RCB.JavaScript\RCB.JavaScript.csproj", "{B0280670-40E0-411D-AFBF-0949269380BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{82F5B223-FCD5-48FF-B03D-224D30876335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82F5B223-FCD5-48FF-B03D-224D30876335}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82F5B223-FCD5-48FF-B03D-224D30876335}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82F5B223-FCD5-48FF-B03D-224D30876335}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C50845F-9A28-4D5D-A23C-01876AD2931D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C50845F-9A28-4D5D-A23C-01876AD2931D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C50845F-9A28-4D5D-A23C-01876AD2931D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C50845F-9A28-4D5D-A23C-01876AD2931D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0280670-40E0-411D-AFBF-0949269380BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0280670-40E0-411D-AFBF-0949269380BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0280670-40E0-411D-AFBF-0949269380BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0280670-40E0-411D-AFBF-0949269380BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

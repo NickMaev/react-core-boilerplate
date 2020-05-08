@@ -5,19 +5,18 @@ import logo from "@Images/logo.png";
 
 type Props = RouteComponentProps<{}>;
 
-export default class HomePage extends React.Component<Props, {}> {
-    constructor(props) {
-        super(props);
-    }
+const HomePage: React.FC<Props> = () => {
+    return <div>
+        <Helmet>
+            <title>Home page - RCB.TypeScript</title>
+        </Helmet>
 
-    render() {
-        return <div>
-            <Helmet>
-                <title>Home page - RCB (TypeScript)</title>
-            </Helmet>
-            <img style={{"margin": "0 auto", "display": "block", "width": "100%"}} src={logo} />
-            
-            <p className="text-center" style={{"fontSize": "52px"}}>Happy coding!</p>
-            </div>;
-    }
+        <br />
+
+        <img style={{ "margin": "0 auto", "display": "block", "width": "60%" }} src={logo} />
+
+        <p className="text-center" style={{ "fontSize": "3rem" }}>Happy coding!</p>
+    </div>;
 }
+
+export default HomePage;

@@ -1,24 +1,37 @@
-import { Route, RouteProps, Redirect } from "react-router";
 import * as React from "react";
-import Globals from "@Globals";
+import { Route, RouteProps, Redirect } from "react-router";
+import SessionManager from "@Core/session";
+import responseContext from "@Core/responseContext";
 
 export interface IProps extends RouteProps {
     layout: React.ComponentClass<any>;
+    statusCode?: number;
 }
 
-export const AppRoute = ({ component: Component, layout: Layout, path: Path, ...rest }: IProps) => {
+const AppRoute: React.FC<IProps> =
+    ({ component: Component, layout: Layout, statusCode: statusCode, path: Path, ...rest }: IProps) => {
 
-    var isLoginPath = Path === "/login";
-    if (!Globals.isAuthenticated && !isLoginPath) {
-        return <Redirect to="/login" />;
-    }
-    if (Globals.isAuthenticated && isLoginPath) {
-        return <Redirect to="/" />;
-    }
+        var isLoginPath = Path === "/login";
 
-    return <Route {...rest} render={props => (
-        <Layout>
-            <Component {...props} />
-        </Layout>
-    )} />;
-}
+        if (!SessionManager.isAuthenticated && !isLoginPath) {
+            return <Redirect to="/login" />;
+        }
+
+        if (SessionManager.isAuthenticated && isLoginPath) {
+            return <Redirect to="/" />;
+        }
+
+        if (statusCode == null) {
+            responseContext.statusCode = 200;
+        } else {
+            responseContext.statusCode = statusCode;
+        }
+
+        return <Route {...rest} render={props => (
+            <Layout>
+                <Component {...props} />
+            </Layout>
+        )} />;
+    };
+
+export default AppRoute;

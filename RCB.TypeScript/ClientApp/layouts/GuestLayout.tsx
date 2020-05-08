@@ -3,7 +3,6 @@ import * as React from "react";
 import { RouteComponentProps } from "react-router";
 import { ToastContainer } from "react-toastify";
 
-
 interface IProps {
     children: any;
 }

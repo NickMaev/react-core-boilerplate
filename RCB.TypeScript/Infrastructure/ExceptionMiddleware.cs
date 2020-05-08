@@ -22,7 +22,7 @@ namespace RCB.TypeScript.Infrastructure
             }
             catch (Exception ex)
             {
-                Log.Logger.Error($"Something went wrong: {ex}");
+                Log.Error(ex, "Exception was thrown during the request.");
                 throw;
             }
         }

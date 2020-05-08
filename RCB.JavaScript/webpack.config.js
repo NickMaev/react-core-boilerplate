@@ -47,7 +47,6 @@ module.exports = (env) => {
                 extensions: ['.js', '.jsx', '.jpg'],
                 alias: {
                     "@Layouts": path.resolve(__dirname, "ClientApp/layouts/"),
-                    "@Ui": path.resolve(__dirname, "ClientApp/Ui"),
                     "@Components": path.resolve(__dirname, "ClientApp/components/"),
                     "@Images": path.resolve(__dirname, "ClientApp/images/"),
                     "@Store": path.resolve(__dirname, "ClientApp/store/"),
@@ -56,7 +55,7 @@ module.exports = (env) => {
                     "@Pages": path.resolve(__dirname, 'ClientApp/pages/'),
                     "@Services": path.resolve(__dirname, 'ClientApp/services/'),
                     "@Models": path.resolve(__dirname, 'ClientApp/models/'),
-                    "@Globals": path.resolve(__dirname, 'ClientApp/Globals')
+                    "@Core": path.resolve(__dirname, 'ClientApp/core/')
                 }
             },
             output: {
@@ -69,13 +68,18 @@ module.exports = (env) => {
                         test: /\.jsx?$/, include: /ClientApp/,
                         use: [
                             {
-                                loader: 'babel-loader'
+                                loader: 'babel-loader',
+                                options: {
+                                    compact: true,
+                                    plugins: [
+                                    ]
+                                },                    
                             }
                         ]
                     },
                     {
                         test: /\.(gif|png|jpe?g|svg)$/i,
-                        use: ['url-loader']
+                        use: ['file-loader']
                     }
                 ]
             },

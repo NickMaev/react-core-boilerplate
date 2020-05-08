@@ -1,84 +1,94 @@
-import { IPersonModel } from "@Models/IPersonModel";
 import * as React from "react";
-import bind from 'bind-decorator';
-import { Form } from "@Components/shared/Form";
-import { Formik } from 'formik';
+import { IPersonModel } from "@Models/IPersonModel";
+import { Formik, Field } from 'formik';
+import FormValidator from "@Components/shared/FormValidator";
 
 export interface IProps {
     data: IPersonModel;
+    onSubmit: (data: IPersonModel) => void;
+    children: (renderEditor: () => JSX.Element, submit: () => void) => JSX.Element;
 }
 
-export default class PersonEditor extends React.Component<IProps, {}> {
-    constructor(props) {
-        super(props);
-    }
+const PersonEditor: React.FC<IProps> = (props: IProps) => {
 
-    public elForm: Form;
+    const formValidator = React.useRef<FormValidator>(null);
 
-    @bind
-    public emptyForm(): void {
-        if (this.elForm) {
-            this.elForm.emptyForm();
+    const onSubmitForm = (values: IPersonModel) => {
+        if (!formValidator.current.isValid()) {
+            // Form is not valid.
+            return;
         }
+        props.onSubmit(values);
     }
 
-    componentDidMount() {
-    }
+    // This function will be passed to children components as a parameter.
+    // It's necessary to build custom markup with controls outside this component.
+    const renderEditor = (values: IPersonModel) => {
 
-    render() {
-
-        return <Formik
-            enableReinitialize={true}
-            initialValues={{
-                firstName: this.props.data.firstName || '',
-                lastName: this.props.data.lastName || ''
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-            }}
-        >
-            {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-                /* and other goodies */
-            }) => (
-                    <Form className="form" ref={x => this.elForm = x}>
-                        <input type="hidden" name="id" defaultValue={(this.props.data.id || 0).toString()} />
-                        <div className="form-group">
+        return <FormValidator className="form" ref={x => formValidator.current = x}>
+            <div className="form-group">
+                <Field name={nameof.full<IPersonModel>(x => x.firstName)}>
+                    {({ field }) => (
+                        <>
                             <label className="control-label required" htmlFor="person__firstName">First name</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="person__firstName"
-                                name={nameof<IPersonModel>(x => x.firstName)}
+                                name={field.name}
                                 data-value-type="string"
                                 data-val-required="true"
                                 data-msg-required="First name is required."
-                                value={values.firstName}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
+                                value={field.value || ''}
+                                onChange={field.onChange}
                             />
-                        </div>
-                        <div className="form-group">
+                        </>
+                    )}
+                </Field>
+            </div>
+            <div className="form-group">
+                <Field name={nameof.full<IPersonModel>(x => x.lastName)}>
+                    {({ field }) => (
+                        <>
                             <label className="control-label required" htmlFor="person__lastName">Last name</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="person__lastName"
-                                name={nameof<IPersonModel>(x => x.lastName)}
+                                name={field.name}
                                 data-value-type="string"
                                 data-val-required="true"
                                 data-msg-required="Last name is required."
-                                value={values.lastName}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
+                                value={field.value || ''}
+                                onChange={field.onChange}
                             />
-                        </div>
-                    </Form>)}
-        </Formik>;
+                        </>
+                    )}
+                </Field>
+            </div>
+        </FormValidator>;
     }
+
+    return <Formik
+        enableReinitialize
+        initialValues={props.data}
+        onSubmit={(values, { setSubmitting }) => {
+            onSubmitForm(values);
+        }}
+    >
+        {({ values, handleSubmit }) => {
+            // Let's say that the children element is a parametrizable function.
+            // So we will pass other elements to this functional component as children 
+            // elements of this one: 
+            // <PersonEditor>
+            // {(renderEditor, handleSubmit) => <>
+            //     {renderEditor()}
+            //     <button onClick={x => handleSubmit()}>Submit</button>
+            // </>}
+            // </PersonEditor>.
+            return props.children(() => renderEditor(values), handleSubmit);
+        }}
+    </Formik>;
 }
+
+export default PersonEditor;

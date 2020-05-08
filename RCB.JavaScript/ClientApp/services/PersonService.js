@@ -1,7 +1,8 @@
-import ServiceBase from "@Services/ServiceBase";
+import { ServiceBase } from "@Core/ServiceBase";
 
 export default class PersonService extends ServiceBase {
-    static async search(term) {
+
+    async search(term = null) {
         if (term == null) {
             term = "";
         }
@@ -11,7 +12,8 @@ export default class PersonService extends ServiceBase {
         });
         return result;
     }
-    static async update(model) {
+
+    async update(model) {
         var result = await this.requestJson({
             url: `/api/Person/${model.id}`,
             method: "PATCH",
@@ -19,14 +21,16 @@ export default class PersonService extends ServiceBase {
         });
         return result;
     }
-    static async delete(id) {
+
+    async delete(id) {
         var result = await this.requestJson({
             url: `/api/Person/${id}`,
             method: "DELETE"
         });
         return result;
     }
-    static async add(model) {
+
+    async add(model) {
         var result = await this.requestJson({
             url: "/api/Person/Add",
             method: "POST",

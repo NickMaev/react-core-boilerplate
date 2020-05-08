@@ -1,9 +1,9 @@
-﻿import ServiceBase from "./ServiceBase";
-import Globals from "@Globals";
+﻿import { ServiceBase } from "@Core/ServiceBase";
+import SessionManager from "@Core/session";
 
 export default class AccountService extends ServiceBase {
     
-    static async login(loginModel) {
+    async login(loginModel) {
         var result = await this.requestJson({
             url: "api/Account/Login",
             method: "POST",
@@ -11,20 +11,20 @@ export default class AccountService extends ServiceBase {
         });
 
         if (!result.hasErrors) {
-            Globals.serviceUser = result.value;
+            SessionManager.setServiceUser(result.value);
         }
 
         return result;
     }
 
-    static async logout() {
+    async logout() {
         var result = await this.requestJson({
             url: "api/Account/Logout",
             method: "POST"
         });
 
         if (!result.hasErrors) {
-            Globals.serviceUser = null;
+            SessionManager.setServiceUser(null);
         }
 
         return result;

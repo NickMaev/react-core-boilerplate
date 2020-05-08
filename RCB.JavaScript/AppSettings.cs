@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RCB.JavaScript
+﻿namespace RCB.JavaScript
 {
     public class AppSettings
     {
@@ -15,7 +13,6 @@ namespace RCB.JavaScript
             Default = new AppSettings();
         }
 
-        public bool IsDevelopment =>
-            Environment.GetEnvironmentVariables()["ASPNETCORE_ENVIRONMENT"]?.ToString() == "Development";
+        public bool IsDevelopment => Program.EnvironmentName == "Development";
     }
 }

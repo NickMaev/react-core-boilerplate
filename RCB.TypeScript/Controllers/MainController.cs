@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using RCB.TypeScript.Models;
+using RCB.TypeScript.Infrastructure;
 
 namespace RCB.TypeScript.Controllers
 {
@@ -9,19 +9,19 @@ namespace RCB.TypeScript.Controllers
     {
         public IActionResult Index()
         {
-            var nodeSession = new NodeSession
+            var webSessionContext = new WebSessionContext
             {
-                Private = new PrivateSession
+                Ssr = new SsrSessionData
                 {
-                    Cookie = string.Join(", ", Request.Cookies.Select(x=>$"{x.Key}={x.Value};"))
+                    Cookie = string.Join(", ", Request.Cookies.Select(x => $"{x.Key}={x.Value};"))
                 },
-                Public = new PublicSession
+                Isomorphic = new IsomorphicSessionData
                 {
                     ServiceUser = ServiceUser
                 }
             };
 
-            return View(nodeSession);
+            return View(webSessionContext);
         }
 
         public IActionResult Error()

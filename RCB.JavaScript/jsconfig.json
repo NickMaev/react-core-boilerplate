@@ -4,23 +4,21 @@
     "target": "es5",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "paths": { 
-      "@Ui":  [ "./Ui" ],
+    "paths": {
+      "@Store/*": [ "./store/*" ],
+      "@Core/*": [ "./core/*" ],
       "@Components/*": [ "./components/*" ],
       "@Images/*": [ "./images/*" ],
-      "@Store/*": [ "./store/*" ],
-      "@Utils": [ "./utils.ts" ],
       "@Styles/*": [ "./styles/*" ],
-      "@Models/*": [ "./models/*" ],
       "@Pages/*": [ "./pages/*" ],
-      "@Layouts/*":  [ "./layouts/*" ],
-      "@Services/*": ["./services/*"],
-      "@Interfaces": ["./interfaces"],
-      "@Globals": ["./Globals"]
+      "@Layouts/*": [ "./layouts/*" ],
+      "@Services/*": [ "./services/*" ],
+      "@Utils": [ "./utils.ts" ]
     }
   },
   "exclude": [
-      "bin",
-      "node_modules"
+    "bin",
+    "node_modules",
+    "AspNet"
   ]
 }

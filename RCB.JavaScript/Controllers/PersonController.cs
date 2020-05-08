@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RCB.JavaScript.Models;
 using RCB.JavaScript.Services;
-using System;
 
 namespace RCB.JavaScript.Controllers
 {
@@ -25,7 +24,7 @@ namespace RCB.JavaScript.Controllers
         [HttpPost("[action]")]
         public IActionResult Add(PersonModel model)
         {
-            if(model == null)
+            if (model == null)
                 return BadRequest($"{nameof(model)} is null.");
             var result = PersonService.Add(model);
             return Json(result);
@@ -34,7 +33,7 @@ namespace RCB.JavaScript.Controllers
         [HttpPatch("{id:int}")]
         public IActionResult Update(PersonModel model)
         {
-            if(model == null)
+            if (model == null)
                 return BadRequest($"{nameof(model)} is null.");
             var result = PersonService.Update(model);
             return Json(result);
@@ -43,7 +42,7 @@ namespace RCB.JavaScript.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
-            if(id <= 0)
+            if (id <= 0)
                 return BadRequest($"{nameof(id)} <= 0.");
             var result = PersonService.Delete(id);
             return Json(result);

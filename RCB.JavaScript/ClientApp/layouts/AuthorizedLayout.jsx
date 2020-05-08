@@ -9,9 +9,7 @@ export default class AuthorizedLayout extends React.Component {
 
         return <div id="authorizedLayout" className="layout">
             <TopMenu />
-            <div className="container container-content">
-                {this.props.children}
-            </div>
+            {this.props.children}
             <ToastContainer />
             <Footer />
         </div>;

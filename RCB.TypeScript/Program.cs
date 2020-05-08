@@ -1,38 +1,78 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Events;
+using System;
+using System.IO;
 
 namespace RCB.TypeScript
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static string EnvironmentName =>
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
+        public static Action<IConfigurationBuilder> BuildConfiguration =
+            builder => builder
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+        public static int Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.AzureApp()
-                .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+            Console.WriteLine("Starting RCB.TypeScript...");
+
+            var builder = new ConfigurationBuilder();
+            BuildConfiguration(builder);
+
+            Log.Logger =
+                new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Build())
                 .CreateLogger();
-            BuildWebHost(args).Run();
+
+            try
+            {
+                var hostBuilder = CreateHostBuilder(args, builder);
+
+                var host = hostBuilder.Build();
+
+                host.Run();
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly.");
+                return 1;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-#if !DEBUG
-                .UseConfiguration(new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("hosting.json", optional: true)
-                    .Build()
-                )
-#endif
-                .UseStartup<Startup>()
-                .Build();
+        public static IHostBuilder CreateHostBuilder(string[] args, IConfigurationBuilder configurationBuilder)
+        {
+            return Host
+                .CreateDefaultBuilder(args)
+                .UseSerilog()
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                    .UseIISIntegration()
+                    .ConfigureKestrel(serverOptions =>
+                    {
+                        // Set properties and call methods on options.
+                    })
+                    .UseConfiguration(
+                        configurationBuilder
+                        .AddJsonFile("hosting.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile($"hosting.{EnvironmentName}.json", optional: true)
+                        .Build()
+                    )
+                    .UseStartup<Startup>();
+                });
+        }
     }
 }

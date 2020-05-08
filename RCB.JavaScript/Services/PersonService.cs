@@ -26,7 +26,7 @@ namespace RCB.JavaScript.Services
 
         public virtual Result<List<PersonModel>> Search(string term = null)
         {
-            if(!string.IsNullOrEmpty(term))
+            if (!string.IsNullOrEmpty(term))
             {
                 term = term.ToLower();
                 term = term.Trim();
@@ -47,11 +47,11 @@ namespace RCB.JavaScript.Services
 
         public virtual Result<int> Add(PersonModel model)
         {
-            if(model == null)
+            if (model == null)
                 return Error<int>();
-            if(string.IsNullOrEmpty(model.FirstName))
+            if (string.IsNullOrEmpty(model.FirstName))
                 return Error<int>("First name not defined.");
-            if(string.IsNullOrEmpty(model.LastName))
+            if (string.IsNullOrEmpty(model.LastName))
                 return Error<int>("Last name not defined.");
 
             TrimStrings(model);
@@ -62,7 +62,7 @@ namespace RCB.JavaScript.Services
                     x.FirstName == model.FirstName &&
                     x.LastName == model.LastName
                     );
-            if(personExists)
+            if (personExists)
             {
                 return Error<int>("Person with the same first name and last name already exists.");
             }
@@ -77,12 +77,12 @@ namespace RCB.JavaScript.Services
 
         public virtual Result Update(PersonModel model)
         {
-            if(model == null)
+            if (model == null)
                 return Error();
-            if(model.Id <= 0)
+            if (model.Id <= 0)
                 return Error($"{model.Id} <= 0.");
             var person = PeopleList.Where(x => x.Id == model.Id).FirstOrDefault();
-            if(person == null)
+            if (person == null)
                 return Error($"Person with id = {model.Id} not found.");
 
             TrimStrings(model);
@@ -94,7 +94,7 @@ namespace RCB.JavaScript.Services
                     x.FirstName == model.FirstName &&
                     x.LastName == model.LastName
                     );
-            if(personExists)
+            if (personExists)
             {
                 return Error("Person with the same first name and last name already exists.");
             }
@@ -108,7 +108,7 @@ namespace RCB.JavaScript.Services
         public virtual Result Delete(int id)
         {
             var unit = PeopleList.Where(x => x.Id == id).FirstOrDefault();
-            if(unit == null)
+            if (unit == null)
                 return Error($"Can't find person with Id = {id}.");
             PeopleList.Remove(unit);
             return Ok();

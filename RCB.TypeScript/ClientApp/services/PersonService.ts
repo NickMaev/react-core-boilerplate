@@ -1,9 +1,11 @@
-import { ServiceBase } from "@Services/ServiceBase";
-import Result from "@Models/Result";
+import Result from "@Core/Result";
+import { ServiceBase } from "@Core/ServiceBase";
+import SessionManager, { IServiceUser } from "@Core/session";
 import { IPersonModel } from "@Models/IPersonModel";
 
 export default class PersonService extends ServiceBase {
-    public static async search(term: string = null): Promise<Result<IPersonModel[]>> {
+
+    public async search(term: string = null): Promise<Result<IPersonModel[]>> {
         if (term == null) {
             term = "";
         }
@@ -13,7 +15,8 @@ export default class PersonService extends ServiceBase {
         });
         return result;
     }
-    public static async update(model: IPersonModel): Promise<Result<{}>> {
+
+    public async update(model: IPersonModel): Promise<Result<{}>> {
         var result = await this.requestJson({
             url: `/api/Person/${model.id}`,
             method: "PATCH",
@@ -21,14 +24,16 @@ export default class PersonService extends ServiceBase {
         });
         return result;
     }
-    public static async delete(id: number): Promise<Result<{}>> {
+
+    public async delete(id: number): Promise<Result<{}>> {
         var result = await this.requestJson({
             url: `/api/Person/${id}`,
             method: "DELETE"
         });
         return result;
     }
-    public static async add(model: IPersonModel): Promise<Result<number>> {
+
+    public async add(model: IPersonModel): Promise<Result<number>> {
         var result = await this.requestJson<number>({
             url: "/api/Person/Add",
             method: "POST",

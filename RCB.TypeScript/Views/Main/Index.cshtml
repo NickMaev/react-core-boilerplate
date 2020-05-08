@@ -1,14 +1,20 @@
 ﻿@inject Microsoft.AspNetCore.SpaServices.Prerendering.ISpaPrerenderer prerenderer
-@using Newtonsoft.Json
-@model RCB.TypeScript.Models.NodeSession
+
+@model RCB.TypeScript.Infrastructure.WebSessionContext
+
 @{
     Layout = null;
 
     var prerenderResult = await prerenderer.RenderToString("ClientApp/dist/main-server", customDataParameter: Model);
-    var publicSessionJson = prerenderResult?.Globals?["nodeSession"]["public"]?.ToString();
+    var isomorphicSessionDataJson = prerenderResult?.Globals?["session"]["isomorphic"]?.ToString();
     var initialReduxStateJson = prerenderResult?.Globals?["initialReduxState"]?.ToString();
     var completedTasksJson = prerenderResult?.Globals?["completedTasks"]?.ToString();
     var helmetStringsPrerender = prerenderResult?.Globals?["helmetStrings"]?.ToString();
+
+    if (prerenderResult.StatusCode.HasValue)
+    {
+        Context.Response.StatusCode = prerenderResult?.StatusCode ?? 200;
+    }
 }
 
 <html>
@@ -24,27 +30,41 @@
     {
         <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
     }
-    
+
     <script>
-        window.publicSession = @Html.Raw(string.IsNullOrEmpty(publicSessionJson) ? "null" : publicSessionJson);    
+        window.session = @Html.Raw(string.IsNullOrEmpty(isomorphicSessionDataJson) ? "null" : isomorphicSessionDataJson);
         window.initialReduxState = @Html.Raw(initialReduxStateJson);
         window.completedTasks = @Html.Raw(completedTasksJson);
     </script>
 </head>
 <body>
 
-<div id="preloader">
-    <div>Loading...</div>
-</div>
+    <div id="applicationLoader">
+        <div>
+            <span class="text">Loading</span>
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+    </div>
 
-@* Save the request token in a div. CORS needs to make sure this token can't be read by javascript from other sources than ours *@
-<div id="xsrf-token" data-xsrf-token="@ViewBag.AntiForgeryRequestToken"></div>
-<div id="access-token" data-access-token="@ViewBag.accessToken"></div>
+    <div id="queryLoader" class="hidden">
+        <div>
+            <div class="spinner"></div>
+        </div>
+    </div>
 
-<div id="react-app">@Html.Raw(prerenderResult?.Html)</div>
 
-<script src="~/dist/vendor.js" asp-append-version="true"></script>
-<script src="~/dist/main-client.js" asp-append-version="true"></script>
+    @* Save the request token in a div. CORS needs to make sure this token can't be read by javascript from other sources than ours *@
+    <div id="xsrf-token" data-xsrf-token="@ViewBag.AntiForgeryRequestToken"></div>
+    <div id="access-token" data-access-token="@ViewBag.accessToken"></div>
+
+    <div id="react-app">@Html.Raw(prerenderResult?.Html)</div>
+
+    <script src="~/dist/vendor.js" asp-append-version="true"></script>
+    <script src="~/dist/main-client.js" asp-append-version="true"></script>
 
 </body>
 </html>

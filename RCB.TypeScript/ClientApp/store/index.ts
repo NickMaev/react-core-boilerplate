@@ -1,10 +1,11 @@
-import { LoginStore } from "@Store/LoginStore";
-import { PersonStore } from "@Store/PersonStore";
+import * as LoginStore from "@Store/loginStore";
+import * as PersonStore from "@Store/personStore";
+import { connect } from "react-redux";
 
-// The top-level state object
-export interface ApplicationState {
-    login: LoginStore.IState;
-    person: PersonStore.IState;
+// The top-level state object.
+export interface IApplicationState {
+    login: LoginStore.ILoginStoreState;
+    person: PersonStore.IPersonStoreState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -17,10 +18,18 @@ export const reducers = {
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are
 // correctly typed to match your store.
-export interface AppThunkAction<TAction> {
-    (dispatch: (action: TAction) => void, getState: () => ApplicationState): void;
+export interface IAppThunkAction<TAction> {
+    (dispatch: (action: TAction) => void, getState: () => IApplicationState): void;
 }
 
-export interface AppThunkActionAsync<TAction, TResult> {
-    (dispatch: (action: TAction) => void, getState: () => ApplicationState) : Promise<TResult>
+export interface IAppThunkActionAsync<TAction, TResult> {
+    (dispatch: (action: TAction) => void, getState: () => IApplicationState) : Promise<TResult>
+}
+
+export function withStore<TStoreState, TActionCreators, TComponent extends React.ComponentType<TStoreState & TActionCreators & any>>(
+    component: TComponent,
+    stateSelector: (state: IApplicationState) => TStoreState,
+    actionCreators: TActionCreators
+): TComponent {
+    return <TComponent> <unknown>connect(stateSelector, actionCreators)(component);
 }

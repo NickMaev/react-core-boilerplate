@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { Provider } from 'react-redux';
-import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
-import { replace } from 'connected-react-router';
-import { createMemoryHistory } from 'history';
-import { createServerRenderer, RenderResult } from 'aspnet-prerendering';
-import { routes } from './routes';
-import configureStore from './configureStore';
-import { Helmet } from 'react-helmet';
-import Globals from "@Globals";
-import { INodeSession } from "@Models/INodeSession";
-import { connect, getCompletedTasks } from "domain-wait";
+import * as React from "react";
+import SessionManager, { IWebSessionContext } from "@Core/session";
+import configureStore from "@Store/configureStore";
+import { createServerRenderer, RenderResult } from "aspnet-prerendering";
+import { replace } from "connected-react-router";
+import { addDomainWait, getCompletedTasks } from "domain-wait";
+import { createMemoryHistory } from "history";
+import { renderToString } from "react-dom/server";
+import { Helmet } from "react-helmet";
+import { Provider } from "react-redux";
+import { StaticRouter } from "react-router-dom";
+import { routes } from "./routes";
+import responseContext from "@Core/responseContext";
 
 var renderHelmet = (): string => {
     var helmetData = Helmet.renderStatic();
@@ -23,22 +23,37 @@ var renderHelmet = (): string => {
     return helmetStrings;
 };
 
-var createGlobals = (nodeSession, initialReduxState, helmetStrings) => {
+var createGlobals = (session: IWebSessionContext, initialReduxState: object, helmetStrings: string) => {
     return {
         completedTasks: getCompletedTasks(),
-        nodeSession,
+        session,
         initialReduxState,
         helmetStrings
     };
 };
 
-export default createServerRenderer((params) => {
-    
-    Globals.reset();
-    Globals.init(params.data as INodeSession);
+/**
+ * Represents NodeJS params.
+ * */
+interface INodeParams {
+    /**
+     * Origin url.
+     * */
+    origin: string;
+    baseUrl: string;
+    url: string;
+    location: { path: string };
+    data: any;
+    domainTasks: Promise<void>;
+}
+
+export default createServerRenderer((params: INodeParams) => {
+
+    SessionManager.resetSession();
+    SessionManager.initSession(params.data as IWebSessionContext);
 
     return new Promise<RenderResult>((resolve, reject) => {
-
+        
         // Prepare Redux store with in-memory history, and dispatch a navigation event.
         // corresponding to the incoming URL.
         const basename = params.baseUrl.substring(0, params.baseUrl.length - 1); // Remove trailing slash.
@@ -59,7 +74,7 @@ export default createServerRenderer((params) => {
             return renderToString(app);
         };
 
-        connect(params);
+        addDomainWait(params);
 
         renderApp();
 
@@ -67,7 +82,8 @@ export default createServerRenderer((params) => {
         if (routerContext.url) {
             resolve({
                 redirectUrl: routerContext.url,
-                globals: createGlobals(params.data, store.getState(), renderHelmet())
+                globals: createGlobals(params.data as IWebSessionContext, store.getState(), renderHelmet()),
+                statusCode: responseContext.statusCode
             });
             return;
         }
@@ -78,7 +94,8 @@ export default createServerRenderer((params) => {
 
             resolve({
                 html: renderApp(),
-                globals: createGlobals(params.data, store.getState(), renderHelmet())
+                globals: createGlobals(params.data, store.getState(), renderHelmet()),
+                statusCode: responseContext.statusCode
             });
 
         }, reject); // Also propagate any errors back into the host application.

@@ -1,8 +1,11 @@
 ﻿# Description
-**React Core Boilerplate** is a starting point for building universal/isomorphic React web applications with ASP.NET Core 2 and server-side rendering. All works fine out of the box. It also is helpful for newbies.
+**React Core Boilerplate** is a starting point for building universal/isomorphic React web applications with ASP.NET Core 3 and server-side rendering. All works fine out of the box. It also is helpful for newbies.
 The project contains a fake authorization system. So you can change it to Identity or the other.  
 [TypeScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.TypeScript) and [JavaScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.JavaScript) versions are available.⚡️  
-Visual Studio templates are available in [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate).
+
+###Visual Studio Marketplace
+* [TypeScript version](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate)
+* [JavaScript version]((https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplateJavaScript)
 
 # Screenshots
 ![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
@@ -10,6 +13,17 @@ Visual Studio templates are available in [Visual Studio Marketplace](https://mar
 ![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 
 # Changes
+##### v. 2.0.0 (2020-05-08)
+* Migrated to **.NET Core 3.1**. 🎉
+* Migrated to `Bootstrap 4` using [react-bootstrap](https://react-bootstrap.github.io/).
+* Migrated to [Formik](https://github.com/jaredpalmer/formik).
+* `Redux` stores migrated to [Redux Toolkit](https://redux-toolkit.js.org/) for boosting development with Redux. Reduced code.
+* Logging and `Serilog` configuration impovements.
+* Added HTTPS support to `server-side rendering`.
+* Added editable status code in routes for SEO.
+* Updated some dependencies.
+* Stability fixes.
+* Removed unnecessary NPM dependencies.
 ##### v. 1.7.1 (2019-06-02)
 * Updated `React`, `Redux`, `React-Router` and other NPM packages connected to them.
 * Updated critical NPM dependencies.
@@ -100,8 +114,11 @@ Third-party libraries:
 * [fork-ts-checker-webpack-plugin](https://github.com/Realytics/fork-ts-checker-webpack-plugin) - Webpack plugin that runs typescript type checker on a separate process.
 * [React](https://reactjs.org/) - main library which worked as isomorphic.
 * [React Router](https://github.com/ReactTraining/react-router) - router for React.
+* [react-bootstrap](https://react-bootstrap.github.io/) - Bootstrap 4 for React.
 * [React-Helmet](https://github.com/nfl/react-helmet) - isomorphic SEO helpers.
 * [Redux](https://redux.js.org/) - store.
+* [Redux Toolkit](https://redux-toolkit.js.org/) - library for boosting development with Redux.
+* [Formik](https://github.com/jaredpalmer/formik) - library for building forms for React.
 * [Connected React Router](https://github.com/supasate/connected-react-router) - Redux binding for React Router.
 * [SASS](https://sass-lang.com/) - CSS preprocessor.
 * [WebPack 4](https://webpack.js.org/) - bundler.
@@ -115,11 +132,13 @@ Own libraries / fixed forks:
 * [NVal](https://github.com/NickMaev/NVal) - jQuery-validation-like Vanilla JS validator.
 * [NVal-Tippy](https://github.com/NickMaev/NVal-Tippy) - Vanilla JS validation with awesome tooltips.
 * [NSerializeJson](https://github.com/NickMaev/NSerializeJson) - flexible form to JSON serializer based on Vanilla JS.
-* [bootstrap3-native](https://github.com/NickMaev/bootstrap3-native) - fixed [bootstrap.native](https://github.com/thednp/bootstrap.native) with types.
 
 # Issues
 
 ## Known issues
+
+* **WebPack Hot Module Replacement [HMR] doesn't work with IIS**
+Will be fixed. Use Kestrel for development instead.
 
 * **HTTP Error 500**  
 Probably you don't have the latest version of Node.js.

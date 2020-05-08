@@ -1,70 +1,57 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router";
-import { NavLink, Redirect } from "react-router-dom";
-import Globals from "@Globals";
+import { Redirect, NavLink } from "react-router-dom";
 import AccountService from "@Services/AccountService";
-import { Dropdown, Collapse } from "bootstrap3-native";
-import bind from 'bind-decorator';
+import { Nav, Navbar, Dropdown } from "react-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap'
+import SessionManager from "@Core/session";
 
-class TopMenu extends React.Component<{}, { logoutAction: boolean }> {
+const TopMenu: React.FC = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = { logoutAction: false };
+    const [isLogout, setLogout] = useState(false);
+
+    const onClickSignOut = async () => {
+        var accountService = new AccountService();
+        await accountService.logout();
+        setLogout(true);
     }
 
-    @bind
-    async onClickSignOut(e: React.MouseEvent<HTMLAnchorElement>) {
-        e.preventDefault();
-
-        await AccountService.logout();
-        this.setState({ logoutAction: true });
+    if (isLogout) {
+        return <Redirect to="/login" />;
     }
 
-    private elDropdown: HTMLAnchorElement;
-    private elCollapseButton: HTMLButtonElement;
+    return <Navbar bg="light" expand="lg">
+        <LinkContainer exact to={'/'}>
+            <Navbar.Brand>RCB.TypeScript</Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+                <LinkContainer exact to={'/'}>
+                    <Nav.Link>Home</Nav.Link>
+                </LinkContainer>
+                <LinkContainer exact to={'/example'}>
+                    <Nav.Link>Example</Nav.Link>
+                </LinkContainer>
+            </Nav>
 
-    componentDidMount() {
-        var dropdown = new Dropdown(this.elDropdown);
-        var collapse = new Collapse(this.elCollapseButton);
-    }
+            <Nav>
+                <Dropdown alignRight>
+                    <Dropdown.Toggle id="user-menu" to="#" as={NavLink as any}>
+                        {SessionManager.isAuthenticated ? SessionManager.getServiceUser().login : null}
+                    </Dropdown.Toggle>
 
-    componentDidUpdate() {
-    }
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => onClickSignOut()}>Sign out</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Nav>
 
-    render() {
-        if (this.state.logoutAction)
-            return <Redirect to="/login" />;
-
-        return <div className="navbar navbar-default">
-            <div className="container-fluid">
-                <div className="navbar-header">
-                    <button ref={x => this.elCollapseButton = x} type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span className="sr-only">Toggle navigation</span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                    </button>
-                    <a className="navbar-brand" href="#">RCB (TypeScript)</a>
-                </div>
-                <div id="navbar" className="navbar-collapse collapse nav navbar-nav navbar-right">
-                    <ul className="nav navbar-nav">
-                        <li><NavLink exact to={'/'} activeClassName="active">Home</NavLink></li>
-                        <li><NavLink exact to={'/example'} activeClassName="active">Example</NavLink></li>
-                        <li className="dropdown">
-                            <a href="#" ref={x => this.elDropdown = x} className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                {Globals.serviceUser.login}&nbsp;
-                                <span className="caret"></span>
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li><a href="#" onClick={this.onClickSignOut}>Sign out</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>;
-    }
+        </Navbar.Collapse>
+    </Navbar>;
 }
 
-export default withRouter(TopMenu as any);
+// Attach the React Router to the component to have an opportunity
+// to interract with it: use some navigation components, 
+// have an access to React Router fields in the component's props, etc.
+export default withRouter(TopMenu);

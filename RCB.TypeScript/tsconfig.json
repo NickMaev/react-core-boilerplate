@@ -9,29 +9,28 @@
     "experimentalDecorators": true,
     "skipDefaultLibCheck": true,
     "strict": false,
-    "noImplicitReturns": true, 
-    "allowUnusedLabels":  false,
+    "noImplicitReturns": true,
+    "allowUnusedLabels": false,
     "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch":  true,
-    "lib": ["es6", "dom"],
-    "types": ["webpack-env"],
-    "paths": { 
-      "@Ui":  [ "./Ui" ],
+    "noFallthroughCasesInSwitch": true,
+    "lib": [ "es6", "dom" ],
+    "types": [ "webpack-env" ],
+    "paths": {
+      "@Store/*": [ "./store/*" ],
+      "@Core/*": [ "./core/*" ],
       "@Components/*": [ "./components/*" ],
       "@Images/*": [ "./images/*" ],
-      "@Store/*": [ "./store/*" ],
-      "@Utils": [ "./utils.ts" ],
       "@Styles/*": [ "./styles/*" ],
       "@Models/*": [ "./models/*" ],
       "@Pages/*": [ "./pages/*" ],
-      "@Layouts/*":  [ "./layouts/*" ],
-      "@Services/*": ["./services/*"],
-      "@Interfaces": ["./interfaces"],
-      "@Globals": ["./Globals"]
+      "@Layouts/*": [ "./layouts/*" ],
+      "@Services/*": [ "./services/*" ],
+      "@Utils": [ "./utils.ts" ]
     }
   },
   "exclude": [
-      "bin",
-      "node_modules"
+    "bin",
+    "node_modules",
+    "AspNet"
   ]
 }

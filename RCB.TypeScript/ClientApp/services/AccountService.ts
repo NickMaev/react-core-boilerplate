@@ -1,12 +1,11 @@
-﻿import { ILoginModel } from "@Models/ILoginModel";
-import { IServiceUser } from "@Models/IServiceUser";
-import Result from "@Models/Result";
-import { ServiceBase } from "./ServiceBase";
-import Globals from "@Globals";
+﻿import Result from "@Core/Result";
+import { ILoginModel } from "@Models/ILoginModel";
+import { ServiceBase } from "@Core/ServiceBase";
+import SessionManager, { IServiceUser } from "@Core/session";
 
 export default class AccountService extends ServiceBase {
     
-    static async login(loginModel: ILoginModel) : Promise<Result<IServiceUser>> {
+    public async login(loginModel: ILoginModel) : Promise<Result<IServiceUser>> {
         var result = await this.requestJson<IServiceUser>({
             url: "api/Account/Login",
             method: "POST",
@@ -14,20 +13,20 @@ export default class AccountService extends ServiceBase {
         });
 
         if (!result.hasErrors) {
-            Globals.serviceUser = result.value;
+            SessionManager.setServiceUser(result.value);
         }
 
         return result;
     }
 
-    static async logout(): Promise<Result<{}>> {
+    public async logout(): Promise<Result<{}>> {
         var result = await this.requestJson<IServiceUser>({
             url: "api/Account/Logout",
             method: "POST"
         });
 
         if (!result.hasErrors) {
-            Globals.serviceUser = null;
+            SessionManager.setServiceUser(null);
         }
 
         return result;

@@ -47,17 +47,15 @@ module.exports = (env) => {
         entry: {
             vendor: [
                 'formik',
-                'json-to-url',
+                'query-string',
                 'domain-wait',
                 'react-paginating',
                 'axios',
-                './ClientApp/styles/preloader.css',
+                'bootstrap/dist/css/bootstrap.min.css',
+                './ClientApp/styles/loaders/applicationLoader.css',
                 'react-toastify/dist/ReactToastify.css',
                 'react-toastify',
-                'nserializejson',
                 'nval-tippy',
-                'bootstrap3-native',
-                'bootstrap-css-only/css/bootstrap.css',
                 'history',
                 'connected-react-router',
                 'react-router-dom',
@@ -70,7 +68,7 @@ module.exports = (env) => {
                 'redux-thunk',
                 'custom-event-polyfill',
                 'event-source-polyfill',
-                '@babel/polyfill',
+                '@babel/polyfill'
             ]
         },
         output: {

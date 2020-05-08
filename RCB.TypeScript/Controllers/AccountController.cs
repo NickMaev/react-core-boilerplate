@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using RCB.TypeScript.Models;
 using RCB.TypeScript.Services;
 

@@ -20,9 +20,9 @@ namespace RCB.JavaScript.Infrastructure
             {
                 await _next(httpContext);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Log.Logger.Error($"Something went wrong: {ex}");
+                Log.Error(ex, "Exception was thrown during the request.");
                 throw;
             }
         }

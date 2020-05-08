@@ -1,36 +1,46 @@
+// Import polyfills.
 import "@babel/polyfill";
 import "custom-event-polyfill";
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
-import configureStore from './configureStore';
+// Import global styles.
+import "bootstrap/dist/css/bootstrap.min.css";
 import "@Styles/main.scss";
-import 'react-toastify/dist/ReactToastify.css';
-import Globals from "@Globals";
-import { isNode } from '@Utils';
-import { NSerializeJson } from "nserializejson";
-import * as RoutesModule from './routes';
+import "@Styles/loaders/queryLoader.scss";
+import "react-toastify/dist/ReactToastify.css";
+
+// Other imports.
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import configureStore from "@Store/configureStore";
+import SessionManager from "@Core/session";
+import { AppContainer } from "react-hot-loader";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
+import { createBrowserHistory } from "history";
+import { isNode, showApplicationLoader, hideApplicationLoader } from "@Utils";
+import * as RoutesModule from "./routes";
+let routes = RoutesModule.routes;
 
 function setupSession() {
     if (!isNode()) {
-        Globals.reset();
-        Globals.init({ public: window["publicSession"], private: {} });
+        SessionManager.resetSession();
+        SessionManager.initSession({
+            isomorphic: window["session"],
+            ssr: {}
+        });
     }
 };
 
 function setupGlobalPlugins() {
-    // Use dot notation in the name attributes of the form inputs.
-    NSerializeJson.options.useDotSeparatorInPath = true;
+    // Use this function to configure plugins on the client side.
 };
 
 function setupEvents() {
-    document.addEventListener('DOMContentLoaded', () => {
-        var preloader = document.getElementById("preloader");
-        preloader.classList.add("hidden");
+
+    showApplicationLoader();
+
+    document.addEventListener("DOMContentLoaded", () => {
+        hideApplicationLoader();
     });
 };
 
@@ -50,33 +60,29 @@ const history = createBrowserHistory({ basename: baseUrl });
 const initialState = window.initialReduxState;
 const store = configureStore(history, initialState);
 
-let routes = RoutesModule.routes;
-
 function renderApp() {
-    // This code starts up the React app when it runs in a browser. It sets up the routing configuration
-    // and injects the app into a DOM element.
+    // This code starts up the React app when it runs in a browser. 
+    // It sets up the routing configuration and injects the app into a DOM element.
     ReactDOM.hydrate(
         <AppContainer>
             <Provider store={ store }>
-                <ConnectedRouter history={history} children={routes} />
+                <ConnectedRouter history={ history } children={ routes } />
             </Provider>
         </AppContainer>,
-        document.getElementById('react-app')
+        document.getElementById("react-app")
     );
 }
 
+// Setup the application and render it.
 setupSession();
-
 setupGlobalPlugins();
-
 setupEvents();
-
 renderApp();
 
 // Allow Hot Module Replacement.
 if (module.hot) {
-    module.hot.accept('./routes', () => {
-        routes = require('./routes').routes;
+    module.hot.accept("./routes", () => {
+        routes = require("./routes").routes;
         renderApp();
     });
 }

@@ -23,7 +23,7 @@ namespace RCB.JavaScript.Services
         public Result<ServiceUser> Verify(HttpContext context)
         {
             var cookieValue = context.Request.Cookies[Constants.AuthorizationCookieKey];
-            if(string.IsNullOrEmpty(cookieValue))
+            if (string.IsNullOrEmpty(cookieValue))
                 return Error<ServiceUser>();
             return Ok(new ServiceUser
             {

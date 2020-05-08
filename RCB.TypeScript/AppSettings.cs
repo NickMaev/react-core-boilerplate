@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RCB.TypeScript
+﻿namespace RCB.TypeScript
 {
     public class AppSettings
     {
@@ -15,7 +13,6 @@ namespace RCB.TypeScript
             Default = new AppSettings();
         }
 
-        public bool IsDevelopment =>
-            Environment.GetEnvironmentVariables()["ASPNETCORE_ENVIRONMENT"]?.ToString() == "Development";
+        public bool IsDevelopment => Program.EnvironmentName == "Development";
     }
 }
