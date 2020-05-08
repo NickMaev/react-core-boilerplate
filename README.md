@@ -5,7 +5,7 @@ The project contains a fake authorization system. So you can change it to Identi
 
 ###Visual Studio Marketplace
 * [TypeScript version](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate)
-* [JavaScript version]((https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplateJavaScript)
+* [JavaScript version](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplateJavaScript)
 
 # Screenshots
 ![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
