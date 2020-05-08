@@ -3,7 +3,7 @@
 The project contains a fake authorization system. So you can change it to Identity or the other.  
 [TypeScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.TypeScript) and [JavaScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.JavaScript) versions are available.⚡️  
 
-###Visual Studio Marketplace
+### Visual Studio Marketplace
 * [TypeScript version](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate)
 * [JavaScript version](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplateJavaScript)
 
