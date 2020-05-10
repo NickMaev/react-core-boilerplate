@@ -137,6 +137,9 @@ Own libraries / fixed forks:
 
 ## Known issues
 
+* **ERROR in ./ClientApp/styles/loaders/xxx.scss (./node_modules/css-loader/dist/cjs.js![...]): Error: ENOENT: no such file or directory, scandir 'xxx\node_modules\node-sass\vendor'**
+Execute `npm i` and `npm rebuild node-sass` in your project's directory.
+
 * **WebPack Hot Module Replacement [HMR] doesn't work with IIS**
 Will be fixed. Use Kestrel for development instead.
 

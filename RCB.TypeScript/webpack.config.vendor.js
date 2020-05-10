@@ -65,10 +65,7 @@ module.exports = (env) => {
                 'react-dom',
                 'react-redux',
                 'redux',
-                'redux-thunk',
-                'custom-event-polyfill',
-                'event-source-polyfill',
-                '@babel/polyfill'
+                'redux-thunk'
             ]
         },
         output: {

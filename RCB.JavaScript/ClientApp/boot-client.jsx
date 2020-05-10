@@ -1,6 +1,7 @@
 // Import polyfills.
-import "@babel/polyfill";
+import "core-js/stable";
 import "custom-event-polyfill";
+import "event-source-polyfill";
 
 // Import global styles.
 import "bootstrap/dist/css/bootstrap.min.css";
