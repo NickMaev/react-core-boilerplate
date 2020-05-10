@@ -6,8 +6,8 @@ The project contains a fake authorization system. So you can change it to Identi
 [TypeScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.TypeScript) and [JavaScript](https://github.com/NickMaev/react-core-boilerplate/tree/master/RCB.JavaScript) versions are available.⚡️  
 
 ### Visual Studio Marketplace
-* [TypeScript version](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate)
-* [JavaScript version](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplateJavaScript)
+![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/services/NikolayMaev.ReactCoreBoilerplate?label=React%20Core%20Boilerplate%20%28TypeScript%29)
+![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/services/NikolayMaev.ReactCoreBoilerplateJavaScript?label=React%20Core%20Boilerplate%20%28JavaScript%29)
 
 # Screenshots
 ![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
