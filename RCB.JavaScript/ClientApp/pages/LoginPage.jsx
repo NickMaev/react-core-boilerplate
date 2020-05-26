@@ -1,4 +1,4 @@
-﻿import * as LoginStore from "@Store/loginStore";
+﻿import * as LoginStore from "@Store/LoginStore";
 import { connect } from "react-redux";
 import React, { useRef } from "react";
 import { Helmet } from "react-helmet";

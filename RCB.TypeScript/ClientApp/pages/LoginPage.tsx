@@ -1,5 +1,5 @@
 ﻿import { ILoginModel } from "@Models/ILoginModel";
-import * as LoginStore from "@Store/loginStore";
+import * as LoginStore from "@Store/LoginStore";
 import React, { useRef } from "react";
 import { Helmet } from "react-helmet";
 import { Redirect, RouteComponentProps, withRouter } from "react-router";

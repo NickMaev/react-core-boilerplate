@@ -3,7 +3,7 @@ import * as React from "react";
 import { Helmet } from "react-helmet";
 import { RouteComponentProps, withRouter } from "react-router";
 import { IPersonModel } from "@Models/IPersonModel";
-import * as PersonStore from "@Store/personStore";
+import * as PersonStore from "@Store/PersonStore";
 import { withStore } from "@Store/index";
 import Paginator from "@Components/shared/Paginator";
 import PersonEditor from "@Components/person/PersonEditor";
