@@ -1,5 +1,5 @@
-import * as LoginStore from "@Store/loginStore";
-import * as PersonStore from "@Store/personStore";
+import * as LoginStore from "@Store/LoginStore";
+import * as PersonStore from "@Store/PersonStore";
 import { connect } from "react-redux";
 
 // The top-level state object.
