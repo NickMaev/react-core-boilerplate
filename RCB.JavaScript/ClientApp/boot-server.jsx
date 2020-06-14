@@ -9,6 +9,7 @@ import { renderToString } from "react-dom/server";
 import { Helmet } from "react-helmet";
 import { Provider } from "react-redux";
 import { StaticRouter } from "react-router-dom";
+import serialize from "serialize-javascript";
 import { routes } from "./routes";
 import responseContext from "@Core/responseContext";
 
@@ -27,7 +28,7 @@ var createGlobals = (session, initialReduxState, helmetStrings) => {
     return {
         completedTasks: getCompletedTasks(),
         session,
-        initialReduxState,
+        initialReduxState: serialize(initialReduxState, {isJSON: true}),
         helmetStrings
     };
 };
