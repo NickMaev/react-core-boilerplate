@@ -3,7 +3,7 @@ import * as React from "react";
 import { Helmet } from "react-helmet";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import * as PersonStore from "@Store/PersonStore";
+import * as PersonStore from "@Store/personStore";
 import Paginator from "@Components/shared/Paginator";
 import PersonEditor from "@Components/person/PersonEditor";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
