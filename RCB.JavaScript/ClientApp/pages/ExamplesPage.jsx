@@ -3,7 +3,7 @@ import * as React from "react";
 import { Helmet } from "react-helmet";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import * as PersonStore from "@Store/personStore";
+import * as personStore from "@Store/personStore";
 import Paginator from "@Components/shared/Paginator";
 import PersonEditor from "@Components/person/PersonEditor";
 import AwesomeDebouncePromise from "awesome-debounce-promise";
@@ -211,7 +211,7 @@ class ExamplesPage extends React.Component {
 // Connect component with Redux store.
 var connectedComponent = connect(
     state => state.person, // Selects which state properties are merged into the component's props.
-    PersonStore.actionCreators, // Selects which action creators are merged into the component's props.
+    personStore.actionCreators, // Selects which action creators are merged into the component's props.
 )(ExamplesPage);
 
 // Attach the React Router to the component to have an opportunity
