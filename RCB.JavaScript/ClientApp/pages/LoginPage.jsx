@@ -1,4 +1,4 @@
-﻿import * as LoginStore from "@Store/loginStore";
+﻿import * as loginStore from "@Store/loginStore";
 import { connect } from "react-redux";
 import React, { useRef } from "react";
 import { Helmet } from "react-helmet";
@@ -99,7 +99,7 @@ const LoginPage = (props) => {
 // Connect component with Redux store.
 var connectedComponent = connect(
     state => state.login, // Selects which state properties are merged into the component's props.
-    LoginStore.actionCreators, // Selects which action creators are merged into the component's props.
+    loginStore.actionCreators, // Selects which action creators are merged into the component's props.
 )(LoginPage);
 
 // Attach the React Router to the component to have an opportunity
