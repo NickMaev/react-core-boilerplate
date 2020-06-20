@@ -3,7 +3,7 @@ import * as React from "react";
 import { Helmet } from "react-helmet";
 import { RouteComponentProps, withRouter } from "react-router";
 import { IPersonModel } from "@Models/IPersonModel";
-import * as PersonStore from "@Store/PersonStore";
+import * as personStore from "@Store/personStore";
 import { withStore } from "@Store/index";
 import Paginator from "@Components/shared/Paginator";
 import PersonEditor from "@Components/person/PersonEditor";
@@ -13,7 +13,7 @@ import { Modal, Button, Container, Row, Card } from "react-bootstrap";
 import { wait } from "domain-wait";
 import Result from "@Core/Result";
 
-type Props = typeof PersonStore.actionCreators & PersonStore.IPersonStoreState & RouteComponentProps<{}>;
+type Props = typeof personStore.actionCreators & personStore.IPersonStoreState & RouteComponentProps<{}>;
 
 interface IState {
     searchTerm: string;
@@ -227,7 +227,7 @@ class ExamplesPage extends React.Component<Props, IState> {
 var connectedComponent = withStore(
     ExamplesPage,
     state => state.person, // Selects which state properties are merged into the component's props.
-    PersonStore.actionCreators, // Selects which action creators are merged into the component's props.
+    personStore.actionCreators, // Selects which action creators are merged into the component's props.
 );
 
 // Attach the React Router to the component to have an opportunity
