@@ -1,5 +1,5 @@
 ﻿import { ILoginModel } from "@Models/ILoginModel";
-import * as LoginStore from "@Store/LoginStore";
+import * as loginStore from "@Store/loginStore";
 import React, { useRef } from "react";
 import { Helmet } from "react-helmet";
 import { Redirect, RouteComponentProps, withRouter } from "react-router";
@@ -10,7 +10,7 @@ import { FormGroup } from "react-bootstrap";
 import { withStore } from "@Store/index";
 import SessionManager from "../core/session";
 
-type Props = RouteComponentProps<{}> & typeof LoginStore.actionCreators & LoginStore.ILoginStoreState;
+type Props = RouteComponentProps<{}> & typeof loginStore.actionCreators & loginStore.ILoginStoreState;
 
 const LoginPage: React.FC<Props> = (props: Props) => {
 
@@ -103,7 +103,7 @@ const LoginPage: React.FC<Props> = (props: Props) => {
 var connectedComponent = withStore(
     LoginPage,
     state => state.login, // Selects which state properties are merged into the component's props.
-    LoginStore.actionCreators, // Selects which action creators are merged into the component's props.
+    loginStore.actionCreators, // Selects which action creators are merged into the component's props.
 );
 
 // Attach the React Router to the component to have an opportunity
