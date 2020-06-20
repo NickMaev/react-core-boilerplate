@@ -72,7 +72,8 @@
     "react-toastify": "5.5.0",
     "redux": "4.0.5",
     "redux-thunk": "2.3.0",
-    "sass": "1.26.5"
+    "sass": "1.26.5",
+    "serialize-javascript": "^4.0.0"
   },
   "scripts": {
     "build:dev": "node build.before.js --mode=development && node ./node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js && node ./node_modules/webpack/bin/webpack.js --config webpack.config.js",

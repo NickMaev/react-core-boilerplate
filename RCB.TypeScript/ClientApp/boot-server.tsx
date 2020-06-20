@@ -9,6 +9,7 @@ import { renderToString } from "react-dom/server";
 import { Helmet } from "react-helmet";
 import { Provider } from "react-redux";
 import { StaticRouter } from "react-router-dom";
+import serializeJavascript from "serialize-javascript";
 import { routes } from "./routes";
 import responseContext from "@Core/responseContext";
 
@@ -27,7 +28,10 @@ var createGlobals = (session: IWebSessionContext, initialReduxState: object, hel
     return {
         completedTasks: getCompletedTasks(),
         session,
-        initialReduxState,
+
+        // Serialize Redux State with "serialize-javascript" library 
+        // prevents XSS atack in the path of React Router via browser.
+        initialReduxState: serializeJavascript(initialReduxState, { isJSON: true }),
         helmetStrings
     };
 };
