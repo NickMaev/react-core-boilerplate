@@ -15,6 +15,10 @@ The project contains a fake authorization system. So you can change it to Identi
 ![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
 
 # Changes
+##### v. 2.0.3 (2020-07-03)
+* Added Docker support. 🐋
+* Added XSS attack prevention, thanks to [XuHaoJun](https://github.com/XuHaoJun).
+* Updated dependencies, removed unused namespaces.
 ##### v. 2.0.0 (2020-05-08)
 * Migrated to **.NET Core 3.1**. 🎉
 * Migrated to `Bootstrap 4` using [react-bootstrap](https://react-bootstrap.github.io/).
@@ -103,12 +107,33 @@ The project contains a fake authorization system. So you can change it to Identi
 Open project's folder in console and run command `npm install`.
 4. Type `npm run build:dev` for development, it will compile the main and vendor bundle.
 5. If you are using Visual Studio 20xx, instead of `IIS Express` select the `YourProjectName` or `ReactCoreBoilerplate`: 
-click on the down arrow near the `IIS Express` and choose the right option.
+click on the down arrow near the `IIS Express` and choose Docker or other option.
 6. Build and run project. It will start in Windows Console.
 
 ## Modify WebPack vendor config
 If you modify the WebPack vendor config, you must manually recompile the vendor bundle.
 Type `npm run build:dev` to do this.
+
+## Run with Docker
+
+### Visual Studio 2019
+Just select the `Docker` option in toolbar.
+
+### Build a container
+Execute the following command in your project's directory:
+`docker build -t [my image name] -f RCB.JavaScript/Dockerfile`
+where `[my image name]` is your Docker image's tag name.
+
+### Run a production container on Windows with HTTPS support (for test)
+1. Trust the ASP.NET Core HTTPS development certificate on Windows and macOS:
+`dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p [my password]`  
+where [my password] is your password.
+2. Execute:
+`dotnet dev-certs https --trust`
+3. Build your container.
+4. Execute:  
+`docker run --rm -it -p 7000:7000 -p 7001:7001 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_Kestrel__Certificates__Default__Password="[my password]" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v %USERPROFILE%\.aspnet\https:/https/ [my image name]`  
+where [my password] - your certificate password (from 1), [my image name] - your Docker image's name.
 
 # Elements
 Third-party libraries:
@@ -139,10 +164,10 @@ Own libraries / fixed forks:
 
 ## Known issues
 
-* **ERROR in ./ClientApp/styles/loaders/xxx.scss (./node_modules/css-loader/dist/cjs.js![...]): Error: ENOENT: no such file or directory, scandir 'xxx\node_modules\node-sass\vendor'**
+* **ERROR in ./ClientApp/styles/loaders/xxx.scss (./node_modules/css-loader/dist/cjs.js![...]): Error: ENOENT: no such file or directory, scandir 'xxx\node_modules\node-sass\vendor'**  
 Execute `npm i` and `npm rebuild node-sass` in your project's directory.
 
-* **WebPack Hot Module Replacement [HMR] doesn't work with IIS**
+* **WebPack Hot Module Replacement [HMR] doesn't work with IIS**  
 Will be fixed. Use Kestrel for development instead.
 
 * **HTTP Error 500**  
