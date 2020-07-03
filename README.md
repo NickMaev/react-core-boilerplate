@@ -1,4 +1,4 @@
-﻿[![Build Status](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_apis/build/status/NickMaev.react-core-boilerplate?branchName=master)](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_build/latest?definitionId=1&branchName=master)
+﻿﻿[![Build Status](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_apis/build/status/NickMaev.react-core-boilerplate?branchName=master)](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_build/latest?definitionId=1&branchName=master)
 
 # Description
 **React Core Boilerplate** is a starting point for building universal/isomorphic React web applications with ASP.NET Core 3 and server-side rendering. All works fine out of the box. It also is helpful for newbies.
@@ -24,7 +24,7 @@ The project contains a fake authorization system. So you can change it to Identi
 * Migrated to `Bootstrap 4` using [react-bootstrap](https://react-bootstrap.github.io/).
 * Migrated to [Formik](https://github.com/jaredpalmer/formik).
 * `Redux` stores migrated to [Redux Toolkit](https://redux-toolkit.js.org/) for boosting development with Redux. Reduced code.
-* Logging and `Serilog` configuration impovements.
+* Logging and `Serilog` configuration improvements.
 * Added HTTPS support to `server-side rendering`.
 * Added editable status code in routes for SEO.
 * Updated some dependencies.
@@ -35,7 +35,7 @@ The project contains a fake authorization system. So you can change it to Identi
 * Updated critical NPM dependencies.
 * Removed unnecessary NPM dependencies.
 ##### v. 1.7.0 (2019-05-05)
-* Repository restructurization.
+* Repository restructuration.
 * Added **JavaScript** version of the React Core Boilerplate. 🎉
 * Stability fixes.
 * Updated critical dependencies.
@@ -72,11 +72,11 @@ The project contains a fake authorization system. So you can change it to Identi
 * Added `hosting.json` which contains hosting settings and will be used in the production build.
 * Added `bind-decorator` package and examples with it.
 * Speeded up of WebPack bundle building.
-* Updated domain-wait package. This update allows you to prevent calling for isomorphic fetch requests twice (in server prerender and after it - on client side).
+* Updated domain-wait package. This update allows you to prevent calling for isomorphic fetch requests twice (in server prerender and after it - on client-side).
 * Updated redux-thunk package. 
-* Added new React components to prevent a headake when you build web applications: `ModalComponent`, `Input`, `MultiSelect`, `Form`. This components are used in examples.
+* Added new React components to prevent a headache when you build web applications: `ModalComponent`, `Input`, `MultiSelect`, `Form`. These components are used in examples.
 ##### v. 1.4.5 (2018-11-02)
-* Added new feature allows web application to share browser's cookie with NodeServices. Now SSR generates HTML code for authenticated users and makes authenticated isomorphic requests. 
+* Added new feature allows a web application to share browser's cookie with NodeServices. Now SSR generates HTML code for authenticated users and makes authenticated isomorphic requests. 
 * Added method `sendFormData` to the `ServiceBase.ts` which allows you to upload files to the server.
 ##### v. 1.3.5 (2018-10-26)
 * Updated NPM packages: `react`, `redux`, `react-router`. 
@@ -103,7 +103,7 @@ The project contains a fake authorization system. So you can change it to Identi
 ## Installation
 1. Install latest .NET Core **SDK** and **Runtime** by [link](https://dotnet.microsoft.com/download).
 2. Install of the latest stable [Node.js](https://nodejs.org/en/).
-3. At the first run you must close project if it runs in Visual Studio or another IDE. 
+3. At the first run you must close the project if it runs in Visual Studio or another IDE. 
 Open project's folder in console and run command `npm install`.
 4. Type `npm run build:dev` for development, it will compile the main and vendor bundle.
 5. If you are using Visual Studio 20xx, instead of `IIS Express` select the `YourProjectName` or `ReactCoreBoilerplate`: 
@@ -117,7 +117,7 @@ Type `npm run build:dev` to do this.
 ## Run with Docker
 
 ### Visual Studio 20xx
-Just select the `Docker` option in toolbar.
+Just select the `Docker` option in the toolbar.
 
 ### Build a container
 Execute the following command in your project's directory:
@@ -158,7 +158,7 @@ Third-party libraries:
 * [SASS](https://sass-lang.com/) - CSS preprocessor.
 * [WebPack 4](https://webpack.js.org/) - bundler.
 * [Axios](https://github.com/axios/axios) - isomorphic fetch util.
-* [ts-nameof](https://github.com/dsherret/ts-nameof) - allows you to use type-safe names of inputs in form.
+* [ts-nameof](https://github.com/dsherret/ts-nameof) - allows you to use type-safe names of inputs in the form.
 * [json-to-url](https://www.npmjs.com/package/json-to-url) - allows you to pass JSON objects to URL query for GET and DELETE methods.
 * [Serilog](https://serilog.net/) - allows you to log into files (`logs/` directory) and also into Azure Cloud Provider.
 
@@ -191,7 +191,7 @@ Set the "WEBSITE_NODE_DEFAULT_VERSION" to 6.11.2 in the "app settings" in Azure.
 Execute `npm run build:dev` command in the project's dir.
 
 ## Other issues
-* If you will have any issue with project starting, you can see errors in logs ("/logs" directory). Please, do this before the open an issue on GitHub. Don't forget to mention the version of the React Core Boilerplate (`JavaScript` or `TypeScript`)
+* If you will have any issue with the project starting, you can see errors in logs ("/logs" directory). Please, do this before the open an issue on GitHub. Don't forget to mention the version of the React Core Boilerplate (`JavaScript` or `TypeScript`)
 
 # Project structure
 * **TypeScript** project:
