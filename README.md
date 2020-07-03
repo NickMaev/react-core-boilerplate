@@ -122,9 +122,9 @@ Just select the `Docker` option in the toolbar.
 ### Build a container
 Execute the following command in your project's directory:
 ```bash
-docker build -t [my image name] -f RCB.JavaScript/Dockerfile
+docker build -t [my image name] . 
 ```
-where `[my image name]` is your Docker image's tag name.
+where `[my image name]` is your Docker image name.
 
 ### Run a production container on Windows with HTTPS support (for test)
 1. Trust the ASP.NET Core HTTPS development certificate on Windows and macOS:
@@ -141,7 +141,7 @@ dotnet dev-certs https --trust
 ```bash
 docker run --rm -it -p 7000:7000 -p 7001:7001 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_Kestrel__Certificates__Default__Password="[my password]" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v %USERPROFILE%\.aspnet\https:/https/ [my image name]
 ```  
-where `[my password]` - your certificate password (from the 1st step), `[my image name]` - your Docker image's name.
+where `[my password]` - your certificate password (from the 1st step), `[my image name]` - your Docker image name.
 
 # Elements
 Third-party libraries:
