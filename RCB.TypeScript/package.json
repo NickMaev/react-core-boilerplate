@@ -76,6 +76,7 @@
     "serialize-javascript": "^4.0.0"
   },
   "scripts": {
+    "postinstall": "node download.js --uri=https://github.com/sass/node-sass/releases/download/v4.14.1/linux-x64-72_binding.node --path=node_modules/node-sass/vendor/linux-x64-72/binding.node",
     "build:dev": "node build.before.js --mode=development && node ./node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js && node ./node_modules/webpack/bin/webpack.js --config webpack.config.js",
     "build:prod": "node build.before.js --mode=production && node ./node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod=true && node ./node_modules/webpack/bin/webpack.js --config webpack.config.js --env.prod=true"
   }
