@@ -105,14 +105,20 @@ The project contains a fake authorization system. So you can change it to Identi
 2. Install of the latest stable [Node.js](https://nodejs.org/en/).
 3. At the first run you must close the project if it runs in Visual Studio or another IDE. 
 Open project's folder in console and run command `npm install`.
-4. Type `npm run build:dev` for development, it will compile the main and vendor bundle.
+4. Execute the following command for development in your project's directory. It will compile the main and vendor bundle.
+```bash 
+npm run build:dev
+```
 5. If you are using Visual Studio 20xx, instead of `IIS Express` select the `YourProjectName` or `ReactCoreBoilerplate`: 
 click on the down arrow near the `IIS Express` and choose Docker or other option.
 6. Build and run project. It will start in Windows Console.
 
 ## Modify WebPack vendor config
 If you modify the WebPack vendor config, you must manually recompile the vendor bundle.
-Type `npm run build:dev` to do this.
+Execute the following command in your project's directory to do this:
+```bash
+npm run build:dev
+```
 
 ## Run with Docker
 
@@ -131,12 +137,12 @@ where `[my image name]` is your Docker image name.
 ```bash
 dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p [my password]
 ```  
-where `[my password]` is your password.
+where `[my password]` is your password.  
 2. Execute:
 ```bash
 dotnet dev-certs https --trust
 ```
-3. Build your container.
+3. Build your container.  
 4. Execute:  
 ```bash
 docker run --rm -it -p 7000:7000 -p 7001:7001 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_Kestrel__Certificates__Default__Password="[my password]" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v %USERPROFILE%\.aspnet\https:/https/ [my image name]
