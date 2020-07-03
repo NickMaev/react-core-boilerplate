@@ -10,9 +10,9 @@ The project contains a fake authorization system. So you can change it to Identi
 [![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/services/NikolayMaev.ReactCoreBoilerplateJavaScript?label=React%20Core%20Boilerplate%20%28JavaScript%29)](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplateJavaScript)
 
 # Screenshots
-![](https://habrastorage.org/webt/ro/22/ze/ro22zedzgeq0u0oidbxfjqzv3pm.png)
-![](https://habrastorage.org/webt/zi/uw/th/ziuwthv_kafkor5tz00x8xwvgz8.png)
-![](https://habrastorage.org/webt/9a/7k/f8/9a7kf8jlwhmc5hrrr4cwxuecxeg.png)
+![](https://habrastorage.org/webt/es/pf/ul/espfulh8iybmj7csw1vjhecj6io.png)
+![](https://habrastorage.org/webt/se/1g/0n/se1g0nro74bo21mqimteda2w_ug.png)
+![](https://habrastorage.org/webt/b5/qh/hm/b5qhhmduvom1bg2widlrziiup-s.png)
 
 # Changes
 ##### v. 2.0.3 (2020-07-03)
@@ -116,24 +116,32 @@ Type `npm run build:dev` to do this.
 
 ## Run with Docker
 
-### Visual Studio 2019
+### Visual Studio 20xx
 Just select the `Docker` option in toolbar.
 
 ### Build a container
 Execute the following command in your project's directory:
-`docker build -t [my image name] -f RCB.JavaScript/Dockerfile`
+```bash
+docker build -t [my image name] -f RCB.JavaScript/Dockerfile
+```
 where `[my image name]` is your Docker image's tag name.
 
 ### Run a production container on Windows with HTTPS support (for test)
 1. Trust the ASP.NET Core HTTPS development certificate on Windows and macOS:
-`dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p [my password]`  
-where [my password] is your password.
+```bash
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p [my password]
+```  
+where `[my password]` is your password.
 2. Execute:
-`dotnet dev-certs https --trust`
+```bash
+dotnet dev-certs https --trust
+```
 3. Build your container.
 4. Execute:  
-`docker run --rm -it -p 7000:7000 -p 7001:7001 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_Kestrel__Certificates__Default__Password="[my password]" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v %USERPROFILE%\.aspnet\https:/https/ [my image name]`  
-where [my password] - your certificate password (from 1), [my image name] - your Docker image's name.
+```bash
+docker run --rm -it -p 7000:7000 -p 7001:7001 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_Kestrel__Certificates__Default__Password="[my password]" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx -v %USERPROFILE%\.aspnet\https:/https/ [my image name]
+```  
+where `[my password]` - your certificate password (from the 1st step), `[my image name]` - your Docker image's name.
 
 # Elements
 Third-party libraries:
