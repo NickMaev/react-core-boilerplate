@@ -11,7 +11,7 @@ The project contains a fake authorization system. So you can change it to Identi
 
 # Screenshots
 ![](https://habrastorage.org/webt/es/pf/ul/espfulh8iybmj7csw1vjhecj6io.png)
-![](https://habrastorage.org/webt/se/1g/0n/se1g0nro74bo21mqimteda2w_ug.png)
+![](https://hsto.org/webt/se/1g/0n/se1g0nro74bo21mqimteda2w_ug.png)
 ![](https://habrastorage.org/webt/b5/qh/hm/b5qhhmduvom1bg2widlrziiup-s.png)
 
 # Changes
