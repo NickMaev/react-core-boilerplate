@@ -1,4 +1,4 @@
-﻿﻿[![Build Status](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_apis/build/status/NickMaev.react-core-boilerplate?branchName=master)](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_apis/build/status/NickMaev.react-core-boilerplate?branchName=master)](https://trixonsystems.visualstudio.com/React%20Core%20Boilerplate/_build/latest?definitionId=1&branchName=master)
 
 # Description
 **React Core Boilerplate** is a starting point for building universal/isomorphic React web applications with ASP.NET Core 3 and server-side rendering. All works fine out of the box. It also is helpful for newbies.
@@ -8,6 +8,7 @@ The project contains a fake authorization system. So you can change it to Identi
 ### Visual Studio Marketplace
 [![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/services/NikolayMaev.ReactCoreBoilerplate?label=React%20Core%20Boilerplate%20%28TypeScript%29)](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplate)
 [![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/services/NikolayMaev.ReactCoreBoilerplateJavaScript?label=React%20Core%20Boilerplate%20%28JavaScript%29)](https://marketplace.visualstudio.com/items?itemName=NikolayMaev.ReactCoreBoilerplateJavaScript)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNickMaev%2Freact-core-boilerplate.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FNickMaev%2Freact-core-boilerplate?ref=badge_shield)
 
 # Screenshots
 ![](https://habrastorage.org/webt/es/pf/ul/espfulh8iybmj7csw1vjhecj6io.png)
@@ -201,3 +202,6 @@ Execute `npm run build:dev` command in the project's dir.
 
 # License
 MIT
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNickMaev%2Freact-core-boilerplate.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNickMaev%2Freact-core-boilerplate?ref=badge_large)
