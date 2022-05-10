@@ -101,8 +101,8 @@ The project contains a fake authorization system. So you can change it to Identi
 # Usage
 
 ## Installation
-1. Install latest .NET Core **SDK** and **Runtime** by [link](https://dotnet.microsoft.com/download).
-2. Install of the latest stable [Node.js](https://nodejs.org/en/).
+1. Install v3 of .NET Core **SDK** and **Runtime** by [link](https://dotnet.microsoft.com/download).
+2. Install v14 of [Node.js](https://nodejs.org/en/).
 3. At the first run you must close the project if it runs in Visual Studio or another IDE. 
 Open project's folder in console and run command `npm install`.
 4. Execute the following command for development in your project's directory. It will compile the main and vendor bundle.
